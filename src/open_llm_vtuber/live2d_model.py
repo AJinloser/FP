@@ -192,3 +192,28 @@ class Live2dModel:
                 target_str = target_str[:start_index] + target_str[end_index:]
                 lower_str = lower_str[:start_index] + lower_str[end_index:]
         return target_str
+
+    @staticmethod
+    def get_all_models(model_dict_path: str = "model_dict.json") -> list:
+        """获取所有可用的Live2D模型信息
+
+        Returns:
+            list: 包含所有模型信息的列表
+        """
+        try:
+            with open(model_dict_path, 'r', encoding='utf-8') as f:
+                model_dict = json.load(f)
+                models = []
+                for name, info in model_dict.items():
+                    model_info = {
+                        "name": name,
+                        "url": info.get("model_url", ""),
+                        "kScale": info.get("scale", 1),
+                        "initialXshift": info.get("x_shift", 0),
+                        "initialYshift": info.get("y_shift", 0)
+                    }
+                    models.append(model_info)
+                return models
+        except Exception as e:
+            logger.error(f"加载模型列表失败: {str(e)}")
+            return []

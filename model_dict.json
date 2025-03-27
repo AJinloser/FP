@@ -34,6 +34,26 @@
         }
     },
     {
+        "name": "LL-local",
+        "description": "test",
+        "url": "/live2d-models/LL/LL.model3.json",
+        "kScale": 0.5,
+        "initialXshift": 0,
+        "initialYshift": 0,
+        "kXOffset": 1150,
+        "idleMotionGroupName": "idle",
+        "emotionMap": {
+            "neutral": 0,
+            "anger": 2,
+            "disgust": 2,
+            "fear": 1,
+            "joy": 3,
+            "smirk": 3,
+            "sadness": 1,
+            "surprise": 3
+        }
+    },
+    {
         "name": "shizuku",
         "description": "Orange-Haired Girl. Will fetch from CDN.",
         "url": "https://cdn.jsdelivr.net/gh/guansss/pixi-live2d-display/test/assets/shizuku/shizuku.model.json",

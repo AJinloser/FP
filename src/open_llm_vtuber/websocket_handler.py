@@ -40,7 +40,7 @@ class MessageType(Enum):
         "delete-history",
     ]
     CONVERSATION = ["mic-audio-end", "text-input", "ai-speak-signal"]
-    CONFIG = ["fetch-configs", "switch-config"]
+    CONFIG = ["fetch-configs", "switch-config", "fetch-model-list"]
     CONTROL = ["interrupt-signal", "audio-play-start"]
     DATA = ["mic-audio-data"]
 
@@ -93,6 +93,7 @@ class WebSocketHandler:
             "switch-config": self._handle_config_switch,
             "fetch-backgrounds": self._handle_fetch_backgrounds,
             "audio-play-start": self._handle_audio_play_start,
+            "fetch-model-list": self._handle_fetch_model_list,
         }
 
     async def handle_new_connection(
@@ -551,3 +552,40 @@ class WebSocketHandler:
     ) -> None:
         """Handle group info request"""
         await self.send_group_update(websocket, client_uid)
+
+    async def _handle_fetch_model_list(
+        self, websocket: WebSocket, client_uid: str, data: WSMessage
+    ) -> None:
+        """处理获取Live2D模型列表的请求"""
+        try:
+            # 从 model_dict.json 读取模型信息
+            with open("model_dict.json", "r", encoding="utf-8") as f:
+                model_list = json.load(f)
+                
+            # 转换为前端需要的格式
+            processed_models = []
+            for model in model_list:
+                processed_model = {
+                    "name": model.get("name", ""),
+                    "url": model.get("url", ""),
+                    "kScale": model.get("kScale", 1),
+                    "initialXshift": model.get("initialXshift", 0),
+                    "initialYshift": model.get("initialYshift", 0)
+                }
+                processed_models.append(processed_model)
+
+            # 发送模型列表给客户端
+            await websocket.send_text(
+                json.dumps({
+                    "type": "model-list",
+                    "models": processed_models
+                })
+            )
+        except Exception as e:
+            logger.error(f"获取模型列表失败: {str(e)}")
+            await websocket.send_text(
+                json.dumps({
+                    "type": "error",
+                    "message": f"获取模型列表失败: {str(e)}"
+                })
+            )
