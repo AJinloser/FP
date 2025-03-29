@@ -5,9 +5,9 @@ conf.yaml
 /backgrounds/*
 
 # ignore non-default live2d models
-/live2d-models/*
-!/live2d-models/mao_pro
-!/live2d-models/shizuku
+# /live2d-models/*
+# !/live2d-models/mao_pro
+# !/live2d-models/shizuku
 
 # ignore non-default character configs
 /characters/*

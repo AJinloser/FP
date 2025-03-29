@@ -1,0 +1,195 @@
+{
+	"Version": 3,
+	"Parameters": [
+		{
+			"Id": "ParamAngleX",
+			"GroupId": "",
+			"Name": "角度 X"
+		},
+		{
+			"Id": "ParamAngleY",
+			"GroupId": "",
+			"Name": "角度 Y"
+		},
+		{
+			"Id": "Param5",
+			"GroupId": "",
+			"Name": "water"
+		},
+		{
+			"Id": "ParamEyeLOpen",
+			"GroupId": "",
+			"Name": "左眼　开闭"
+		},
+		{
+			"Id": "ParamEyeBallX",
+			"GroupId": "",
+			"Name": "眼珠 X"
+		},
+		{
+			"Id": "ParamEyeBallY",
+			"GroupId": "",
+			"Name": "眼珠 Y"
+		},
+		{
+			"Id": "ParamMouthOpenY",
+			"GroupId": "",
+			"Name": "嘴　张开和闭合"
+		},
+		{
+			"Id": "Param4",
+			"GroupId": "",
+			"Name": "流汗"
+		},
+		{
+			"Id": "Param11",
+			"GroupId": "",
+			"Name": "生气"
+		},
+		{
+			"Id": "Param9",
+			"GroupId": "",
+			"Name": "橘子出现"
+		},
+		{
+			"Id": "Param12",
+			"GroupId": "",
+			"Name": "脸红"
+		},
+		{
+			"Id": "Param6",
+			"GroupId": "",
+			"Name": "呆住"
+		},
+		{
+			"Id": "Param10",
+			"GroupId": "",
+			"Name": "盆子出现"
+		},
+		{
+			"Id": "Param7",
+			"GroupId": "",
+			"Name": "被子"
+		},
+		{
+			"Id": "Param8",
+			"GroupId": "",
+			"Name": "眼镜"
+		},
+		{
+			"Id": "ParamBreath",
+			"GroupId": "",
+			"Name": "呼吸"
+		},
+		{
+			"Id": "ParamHairFront",
+			"GroupId": "",
+			"Name": "摇动 前发"
+		},
+		{
+			"Id": "ParamHairFront2",
+			"GroupId": "",
+			"Name": "摇动 前发"
+		},
+		{
+			"Id": "ParamHairFront3",
+			"GroupId": "",
+			"Name": "摇动 前发"
+		},
+		{
+			"Id": "ParamHairSide",
+			"GroupId": "",
+			"Name": "摇动 侧发"
+		},
+		{
+			"Id": "ParamHairSide2",
+			"GroupId": "",
+			"Name": "摇动 侧发"
+		},
+		{
+			"Id": "ParamHairSide3",
+			"GroupId": "",
+			"Name": "摇动 侧发"
+		},
+		{
+			"Id": "Param",
+			"GroupId": "",
+			"Name": "鼠标跟随X"
+		},
+		{
+			"Id": "Param2",
+			"GroupId": "",
+			"Name": "鼠标跟随Y"
+		},
+		{
+			"Id": "Param3",
+			"GroupId": "",
+			"Name": "点击"
+		}
+	],
+	"ParameterGroups": [],
+	"Parts": [
+		{
+			"Id": "Part",
+			"Name": "盆子"
+		},
+		{
+			"Id": "Part12",
+			"Name": "生气.psd"
+		},
+		{
+			"Id": "Part2",
+			"Name": "橘子"
+		},
+		{
+			"Id": "Part3",
+			"Name": "眼镜"
+		},
+		{
+			"Id": "Part4",
+			"Name": "豚豚"
+		},
+		{
+			"Id": "Part10",
+			"Name": "鼠标"
+		},
+		{
+			"Id": "Part11",
+			"Name": "盆子后"
+		},
+		{
+			"Id": "Part5",
+			"Name": "眼睛"
+		},
+		{
+			"Id": "Part6",
+			"Name": "嘴"
+		},
+		{
+			"Id": "Part7",
+			"Name": "被子"
+		},
+		{
+			"Id": "Part8",
+			"Name": "左手"
+		},
+		{
+			"Id": "Part9",
+			"Name": "右手"
+		}
+	],
+	"CombinedParameters": [
+		[
+			"ParamAngleX",
+			"ParamAngleY"
+		],
+		[
+			"ParamEyeBallX",
+			"ParamEyeBallY"
+		],
+		[
+			"Param",
+			"Param2"
+		]
+	]
+}

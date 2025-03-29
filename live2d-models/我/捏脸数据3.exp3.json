@@ -1,0 +1,190 @@
+{
+    "Type": "Live2D Expression",
+    "Parameters": [
+        {
+            "Id": "st3",
+            "Value": 1.0,
+            "Blend": "Add"
+        },
+        {
+            "Id": "st4",
+            "Value": 1.0,
+            "Blend": "Add"
+        },
+        {
+            "Id": "qb15",
+            "Value": 1.0,
+            "Blend": "Add"
+        },
+        {
+            "Id": "qb16",
+            "Value": 0.0,
+            "Blend": "Add"
+        },
+        {
+            "Id": "st5",
+            "Value": 0.6993421316146851,
+            "Blend": "Add"
+        },
+        {
+            "Id": "st6",
+            "Value": 0.22970890998840333,
+            "Blend": "Add"
+        },
+        {
+            "Id": "st7",
+            "Value": 0.6738190650939941,
+            "Blend": "Add"
+        },
+        {
+            "Id": "st8",
+            "Value": -1.0,
+            "Blend": "Add"
+        },
+        {
+            "Id": "st9",
+            "Value": 0.23481571674346925,
+            "Blend": "Add"
+        },
+        {
+            "Id": "st10",
+            "Value": 0.5513062477111816,
+            "Blend": "Add"
+        },
+        {
+            "Id": "st11",
+            "Value": 0.4951556921005249,
+            "Blend": "Add"
+        },
+        {
+            "Id": "st12",
+            "Value": 0.49005091190338137,
+            "Blend": "Add"
+        },
+        {
+            "Id": "qb3",
+            "Value": 0.0,
+            "Blend": "Add"
+        },
+        {
+            "Id": "qb4",
+            "Value": 0.41858339309692385,
+            "Blend": "Add"
+        },
+        {
+            "Id": "qb5",
+            "Value": -0.7708069086074829,
+            "Blend": "Add"
+        },
+        {
+            "Id": "qb13",
+            "Value": -0.6176662445068359,
+            "Blend": "Add"
+        },
+        {
+            "Id": "qb6",
+            "Value": 1.0,
+            "Blend": "Add"
+        },
+        {
+            "Id": "qb2",
+            "Value": 0.24757713079452516,
+            "Blend": "Add"
+        },
+        {
+            "Id": "qb9",
+            "Value": 0.28841423988342287,
+            "Blend": "Add"
+        },
+        {
+            "Id": "qb10",
+            "Value": 1.2149161100387574,
+            "Blend": "Add"
+        },
+        {
+            "Id": "qb11",
+            "Value": 0.6482952833175659,
+            "Blend": "Add"
+        },
+        {
+            "Id": "qb12",
+            "Value": 0.6738184690475464,
+            "Blend": "Add"
+        },
+        {
+            "Id": "qb18",
+            "Value": 0.0,
+            "Blend": "Add"
+        },
+        {
+            "Id": "qb20",
+            "Value": 0.5661017894744873,
+            "Blend": "Add"
+        },
+        {
+            "Id": "qb19",
+            "Value": 1.0,
+            "Blend": "Add"
+        },
+        {
+            "Id": "qb23",
+            "Value": 1.0,
+            "Blend": "Add"
+        },
+        {
+            "Id": "qb26",
+            "Value": 0.5844863653182983,
+            "Blend": "Add"
+        },
+        {
+            "Id": "qb27",
+            "Value": -1.0,
+            "Blend": "Add"
+        },
+        {
+            "Id": "qb25",
+            "Value": 0.0,
+            "Blend": "Add"
+        },
+        {
+            "Id": "qb21",
+            "Value": -0.4435889720916748,
+            "Blend": "Add"
+        },
+        {
+            "Id": "qb22",
+            "Value": 1.0,
+            "Blend": "Add"
+        },
+        {
+            "Id": "qb24",
+            "Value": 1.0,
+            "Blend": "Add"
+        },
+        {
+            "Id": "ParamBrowLForm",
+            "Value": 1.0,
+            "Blend": "Add"
+        },
+        {
+            "Id": "ParamBrowRForm",
+            "Value": 1.0,
+            "Blend": "Add"
+        },
+        {
+            "Id": "ParamBrowRForm2",
+            "Value": -0.5410975217819214,
+            "Blend": "Add"
+        },
+        {
+            "Id": "mouthx",
+            "Value": 3.6191368103027345,
+            "Blend": "Add"
+        },
+        {
+            "Id": "st2",
+            "Value": 0.0,
+            "Blend": "Add"
+        }
+    ]
+}

@@ -1,0 +1,29 @@
+{
+	"Version": 3,
+	"FileReferences": {
+		"Moc": "斐牌卡皮巴拉.moc3",
+		"Textures": [
+			"斐牌卡皮巴拉.2048/texture_00.png"
+		],
+		"Physics": "斐牌卡皮巴拉.physics3.json",
+		"DisplayInfo": "斐牌卡皮巴拉.cdi3.json"
+	},
+	"Groups": [
+		{
+			"Target": "Parameter",
+			"Name": "LipSync",
+			"Ids": [
+				"ParamEyeLOpen",
+				"ParamMouthOpenY"
+			]
+		},
+		{
+			"Target": "Parameter",
+			"Name": "EyeBlink",
+			"Ids": [
+				"ParamEyeLOpen",
+				"ParamMouthOpenY"
+			]
+		}
+	]
+}
