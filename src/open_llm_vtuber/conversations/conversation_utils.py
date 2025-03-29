@@ -147,6 +147,9 @@ async def process_user_input(
     websocket_send: WebSocketSend,
 ) -> str:
     """Process user input, converting audio to text if needed"""
+    if isinstance(user_input, str) and not user_input:
+        return ""
+        
     if isinstance(user_input, np.ndarray):
         logger.info("Transcribing audio input...")
         input_text = await asr_engine.async_transcribe_np(user_input)
