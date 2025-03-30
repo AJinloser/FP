@@ -1,0 +1,1439 @@
+{
+	"Version": 3,
+	"Parameters": [
+		{
+			"Id": "ParamWaterMark",
+			"GroupId": "ParamGroup20",
+			"Name": "水印"
+		},
+		{
+			"Id": "ParamClothes",
+			"GroupId": "ParamGroup20",
+			"Name": "服装切换"
+		},
+		{
+			"Id": "ParamCoat",
+			"GroupId": "ParamGroup20",
+			"Name": "外套"
+		},
+		{
+			"Id": "ParamTakeBerate",
+			"GroupId": "ParamGroup20",
+			"Name": "贝雷帽"
+		},
+		{
+			"Id": "ParamTakeEarrings",
+			"GroupId": "ParamGroup20",
+			"Name": "耳环"
+		},
+		{
+			"Id": "ParamTakeBrooch",
+			"GroupId": "ParamGroup20",
+			"Name": "胸针"
+		},
+		{
+			"Id": "ParamEyeShadow",
+			"GroupId": "ParamGroup20",
+			"Name": "眼影"
+		},
+		{
+			"Id": "ParamBag",
+			"GroupId": "ParamGroup20",
+			"Name": "小包"
+		},
+		{
+			"Id": "ParamPhone",
+			"GroupId": "ParamGroup20",
+			"Name": "手机"
+		},
+		{
+			"Id": "ParamCoffee",
+			"GroupId": "ParamGroup20",
+			"Name": "咖啡"
+		},
+		{
+			"Id": "ParamPad",
+			"GroupId": "ParamGroup20",
+			"Name": "Pad"
+		},
+		{
+			"Id": "ParamPen",
+			"GroupId": "ParamGroup20",
+			"Name": "笔"
+		},
+		{
+			"Id": "ParamMimigaki",
+			"GroupId": "ParamGroup20",
+			"Name": "挖耳勺"
+		},
+		{
+			"Id": "ParamCheek",
+			"GroupId": "ParamGroup8",
+			"Name": "脸颊泛红"
+		},
+		{
+			"Id": "ParamHLOff",
+			"GroupId": "ParamGroup8",
+			"Name": "关闭高光"
+		},
+		{
+			"Id": "ParamFaceDark",
+			"GroupId": "ParamGroup8",
+			"Name": "阴暗"
+		},
+		{
+			"Id": "ParamOH",
+			"GroupId": "ParamGroup8",
+			"Name": "晕晕"
+		},
+		{
+			"Id": "ParamEyeHeart",
+			"GroupId": "ParamGroup8",
+			"Name": "爱心眼"
+		},
+		{
+			"Id": "ParamEyeMoney",
+			"GroupId": "ParamGroup8",
+			"Name": "金钱眼"
+		},
+		{
+			"Id": "ParamPienn",
+			"GroupId": "ParamGroup8",
+			"Name": "ぴえん"
+		},
+		{
+			"Id": "ParamTear",
+			"GroupId": "ParamGroup8",
+			"Name": "流泪"
+		},
+		{
+			"Id": "ParamMistSwitch",
+			"GroupId": "ParamGroup8",
+			"Name": "白雾呼气"
+		},
+		{
+			"Id": "ParamArmRFB",
+			"GroupId": "ParamGroup25",
+			"Name": "手R前后"
+		},
+		{
+			"Id": "ParamHand1R",
+			"GroupId": "ParamGroup25",
+			"Name": "手下垂R"
+		},
+		{
+			"Id": "ParamHand2R",
+			"GroupId": "ParamGroup25",
+			"Name": "手握笔R"
+		},
+		{
+			"Id": "ParamHand3R",
+			"GroupId": "ParamGroup25",
+			"Name": "手持物R"
+		},
+		{
+			"Id": "ParamHandOpenR",
+			"GroupId": "ParamGroup25",
+			"Name": "手OpenR"
+		},
+		{
+			"Id": "ParamHandOpenR2",
+			"GroupId": "ParamGroup25",
+			"Name": "手背Open R"
+		},
+		{
+			"Id": "ParamHandFingerR",
+			"GroupId": "ParamGroup25",
+			"Name": "手指R开合"
+		},
+		{
+			"Id": "ParamWristRroll",
+			"GroupId": "ParamGroup25",
+			"Name": "手腕R转动"
+		},
+		{
+			"Id": "ParamLowerArmRroll",
+			"GroupId": "ParamGroup25",
+			"Name": "小臂R转动"
+		},
+		{
+			"Id": "ParamUpArmRroll",
+			"GroupId": "ParamGroup25",
+			"Name": "大臂R转动"
+		},
+		{
+			"Id": "ParamArmYR",
+			"GroupId": "ParamGroup25",
+			"Name": "手臂Y R"
+		},
+		{
+			"Id": "ParamShoulderR",
+			"GroupId": "ParamGroup25",
+			"Name": "耸肩R"
+		},
+		{
+			"Id": "ParamArmLFB",
+			"GroupId": "ParamGroup24",
+			"Name": "手L前后"
+		},
+		{
+			"Id": "ParamHand1L",
+			"GroupId": "ParamGroup24",
+			"Name": "手下垂L"
+		},
+		{
+			"Id": "ParamHand2L",
+			"GroupId": "ParamGroup24",
+			"Name": "手握笔L"
+		},
+		{
+			"Id": "ParamHand3L",
+			"GroupId": "ParamGroup24",
+			"Name": "手持物L"
+		},
+		{
+			"Id": "ParamHandOpenL",
+			"GroupId": "ParamGroup24",
+			"Name": "手Open L"
+		},
+		{
+			"Id": "ParamHandOpenL2",
+			"GroupId": "ParamGroup24",
+			"Name": "手背Open L"
+		},
+		{
+			"Id": "ParamHandFingerL",
+			"GroupId": "ParamGroup24",
+			"Name": "手指L开合"
+		},
+		{
+			"Id": "ParamWristLroll",
+			"GroupId": "ParamGroup24",
+			"Name": "手腕L转动"
+		},
+		{
+			"Id": "ParamLowerArmLroll",
+			"GroupId": "ParamGroup24",
+			"Name": "小臂L转动"
+		},
+		{
+			"Id": "ParamUpArmLroll",
+			"GroupId": "ParamGroup24",
+			"Name": "大臂L转动"
+		},
+		{
+			"Id": "ParamArmYL",
+			"GroupId": "ParamGroup24",
+			"Name": "手臂Y L"
+		},
+		{
+			"Id": "ParamShoulderL",
+			"GroupId": "ParamGroup24",
+			"Name": "耸肩L"
+		},
+		{
+			"Id": "ParamSwitchZ",
+			"GroupId": "ParamGroup14",
+			"Name": "Z反绑开关"
+		},
+		{
+			"Id": "ParamSwitchX",
+			"GroupId": "ParamGroup14",
+			"Name": "X反绑开关"
+		},
+		{
+			"Id": "ParamMouthForm",
+			"GroupId": "ParamGroup4",
+			"Name": "嘴　变形"
+		},
+		{
+			"Id": "ParamMouthOpenY",
+			"GroupId": "ParamGroup4",
+			"Name": "嘴　张开和闭合"
+		},
+		{
+			"Id": "ParamMouthFunnel",
+			"GroupId": "ParamGroup4",
+			"Name": "撅嘴"
+		},
+		{
+			"Id": "ParamMouthShrug",
+			"GroupId": "ParamGroup4",
+			"Name": "耸嘴"
+		},
+		{
+			"Id": "ParamJawOpen",
+			"GroupId": "ParamGroup4",
+			"Name": "下巴向下"
+		},
+		{
+			"Id": "ParamMouthPuckerWiden",
+			"GroupId": "ParamGroup4",
+			"Name": "嘴宽窄"
+		},
+		{
+			"Id": "ParamMouthPressLipOpen",
+			"GroupId": "ParamGroup4",
+			"Name": "嘴唇用力"
+		},
+		{
+			"Id": "ParamMouthX",
+			"GroupId": "ParamGroup4",
+			"Name": "歪嘴"
+		},
+		{
+			"Id": "ParamTogueOut",
+			"GroupId": "ParamGroup4",
+			"Name": "吐舌"
+		},
+		{
+			"Id": "ParamTonguePhy",
+			"GroupId": "ParamGroup4",
+			"Name": "吐舌 摇动"
+		},
+		{
+			"Id": "ParamCheekPuff",
+			"GroupId": "ParamGroup4",
+			"Name": "鼓脸"
+		},
+		{
+			"Id": "ParamSilence",
+			"GroupId": "ParamGroup6",
+			"Name": "【切换音频同步】"
+		},
+		{
+			"Id": "ParamA",
+			"GroupId": "ParamGroup6",
+			"Name": "A"
+		},
+		{
+			"Id": "ParamI",
+			"GroupId": "ParamGroup6",
+			"Name": "I"
+		},
+		{
+			"Id": "ParamU",
+			"GroupId": "ParamGroup6",
+			"Name": "U"
+		},
+		{
+			"Id": "ParamE",
+			"GroupId": "ParamGroup6",
+			"Name": "E"
+		},
+		{
+			"Id": "ParamO",
+			"GroupId": "ParamGroup6",
+			"Name": "O"
+		},
+		{
+			"Id": "ParamOH2",
+			"GroupId": "ParamGroup9",
+			"Name": "晕晕旋转"
+		},
+		{
+			"Id": "ParamPiennPhy",
+			"GroupId": "ParamGroup9",
+			"Name": "ぴえん弹动"
+		},
+		{
+			"Id": "ParamEyeHeartPhy",
+			"GroupId": "ParamGroup9",
+			"Name": "爱心眼弹动"
+		},
+		{
+			"Id": "ParamMist",
+			"GroupId": "ParamGroup9",
+			"Name": "呼气动画"
+		},
+		{
+			"Id": "ParamMist1",
+			"GroupId": "ParamGroup9",
+			"Name": "雾气透明度"
+		},
+		{
+			"Id": "ParamTearKL",
+			"GroupId": "ParamGroup9",
+			"Name": "流泪LK帧"
+		},
+		{
+			"Id": "ParamTear1",
+			"GroupId": "ParamGroup9",
+			"Name": "流泪动画"
+		},
+		{
+			"Id": "ParamTear2",
+			"GroupId": "ParamGroup9",
+			"Name": "流泪透明度"
+		},
+		{
+			"Id": "ParamEyeTearPhy",
+			"GroupId": "ParamGroup9",
+			"Name": "眼泪弹动"
+		},
+		{
+			"Id": "ParamTearKR",
+			"GroupId": "ParamGroup9",
+			"Name": "流泪RK帧"
+		},
+		{
+			"Id": "ParamTearR1",
+			"GroupId": "ParamGroup9",
+			"Name": "流泪动画R"
+		},
+		{
+			"Id": "ParamTearR2",
+			"GroupId": "ParamGroup9",
+			"Name": "流泪透明度R"
+		},
+		{
+			"Id": "ParamEyeTearPhyR",
+			"GroupId": "ParamGroup9",
+			"Name": "眼泪弹动R"
+		},
+		{
+			"Id": "ParamMoney2",
+			"GroupId": "ParamGroup9",
+			"Name": "金钱旋转动画"
+		},
+		{
+			"Id": "ParamMoneyKira",
+			"GroupId": "ParamGroup9",
+			"Name": "金钱闪光动画"
+		},
+		{
+			"Id": "ParamMoneyKira2",
+			"GroupId": "ParamGroup9",
+			"Name": "金钱闪光透明度"
+		},
+		{
+			"Id": "ParamEyeLOpen",
+			"GroupId": "ParamGroup",
+			"Name": "左眼　开闭"
+		},
+		{
+			"Id": "ParamEyeLSmile",
+			"GroupId": "ParamGroup",
+			"Name": "左眼　微笑"
+		},
+		{
+			"Id": "ParamEyeLEmotion",
+			"GroupId": "ParamGroup",
+			"Name": "左眼　眼眶"
+		},
+		{
+			"Id": "ParamEyeLEmotion2",
+			"GroupId": "ParamGroup",
+			"Name": "左眼　眉毛联动"
+		},
+		{
+			"Id": "ParamEyeREmotion",
+			"GroupId": "ParamGroup",
+			"Name": "右眼　眼眶"
+		},
+		{
+			"Id": "ParamEyeREmotion2",
+			"GroupId": "ParamGroup",
+			"Name": "右眼　眉毛联动"
+		},
+		{
+			"Id": "ParamEyeSquintLeft",
+			"GroupId": "ParamGroup",
+			"Name": "左眼　眯眼"
+		},
+		{
+			"Id": "ParamEyeSquintRight",
+			"GroupId": "ParamGroup",
+			"Name": "右眼　眯眼"
+		},
+		{
+			"Id": "ParamCheekSquintLeft",
+			"GroupId": "ParamGroup",
+			"Name": "左眼　脸颊抬起"
+		},
+		{
+			"Id": "ParamCheekSquintRight",
+			"GroupId": "ParamGroup",
+			"Name": "右眼　脸颊抬起"
+		},
+		{
+			"Id": "ParamEyeROpen",
+			"GroupId": "ParamGroup",
+			"Name": "右眼   开闭"
+		},
+		{
+			"Id": "ParamEyeRSmile",
+			"GroupId": "ParamGroup",
+			"Name": "右眼　微笑"
+		},
+		{
+			"Id": "ParamEyeBallX",
+			"GroupId": "ParamGroup",
+			"Name": "眼珠 X"
+		},
+		{
+			"Id": "ParamEyeBallY",
+			"GroupId": "ParamGroup",
+			"Name": "眼珠 Y"
+		},
+		{
+			"Id": "ParamLashPhyL",
+			"GroupId": "ParamGroup3",
+			"Name": "左眼 睫毛摇动"
+		},
+		{
+			"Id": "ParamEyePhyL",
+			"GroupId": "ParamGroup3",
+			"Name": "左眼 眼眶摇动"
+		},
+		{
+			"Id": "ParamPupilPhyL",
+			"GroupId": "ParamGroup3",
+			"Name": "左眼 瞳孔缩放"
+		},
+		{
+			"Id": "ParamEyeHLPhyL",
+			"GroupId": "ParamGroup3",
+			"Name": "左眼 高光摇动"
+		},
+		{
+			"Id": "ParamEyeHLPhyL2",
+			"GroupId": "ParamGroup3",
+			"Name": "左眼 高光缩放"
+		},
+		{
+			"Id": "ParamIrisPhyL",
+			"GroupId": "ParamGroup3",
+			"Name": "左眼 虹膜摇动"
+		},
+		{
+			"Id": "ParamIrisPhyL2",
+			"GroupId": "ParamGroup3",
+			"Name": "左眼 虹膜弹动"
+		},
+		{
+			"Id": "ParamLashPhyR",
+			"GroupId": "ParamGroup5",
+			"Name": "右眼 睫毛摇动"
+		},
+		{
+			"Id": "ParamEyePhyR",
+			"GroupId": "ParamGroup5",
+			"Name": "右眼 眼眶摇动"
+		},
+		{
+			"Id": "ParamPupilPhyR",
+			"GroupId": "ParamGroup5",
+			"Name": "右眼 瞳孔缩放"
+		},
+		{
+			"Id": "ParamEyeHLPhyR",
+			"GroupId": "ParamGroup5",
+			"Name": "右眼 高光摇动"
+		},
+		{
+			"Id": "ParamEyeHLPhyR2",
+			"GroupId": "ParamGroup5",
+			"Name": "右眼 高光缩放"
+		},
+		{
+			"Id": "ParamIrisPhyR",
+			"GroupId": "ParamGroup5",
+			"Name": "右眼 虹膜摇动"
+		},
+		{
+			"Id": "ParamIrisPhyR2",
+			"GroupId": "ParamGroup5",
+			"Name": "右眼 虹膜弹动"
+		},
+		{
+			"Id": "ParamBrowInnerUp",
+			"GroupId": "ParamGroup2",
+			"Name": "眉头向上"
+		},
+		{
+			"Id": "ParamBrowLY",
+			"GroupId": "ParamGroup2",
+			"Name": "左眉   上下"
+		},
+		{
+			"Id": "ParamBrowLX",
+			"GroupId": "ParamGroup2",
+			"Name": "左眉　左右"
+		},
+		{
+			"Id": "ParamBrowLAngle",
+			"GroupId": "ParamGroup2",
+			"Name": "左眉　角度"
+		},
+		{
+			"Id": "ParamBrowLForm",
+			"GroupId": "ParamGroup2",
+			"Name": "左眉　変形"
+		},
+		{
+			"Id": "ParamBrowRY",
+			"GroupId": "ParamGroup2",
+			"Name": "右眉　上下"
+		},
+		{
+			"Id": "ParamBrowRX",
+			"GroupId": "ParamGroup2",
+			"Name": "右眉　左右"
+		},
+		{
+			"Id": "ParamBrowRAngle",
+			"GroupId": "ParamGroup2",
+			"Name": "右眉　角度"
+		},
+		{
+			"Id": "ParamBrowRForm",
+			"GroupId": "ParamGroup2",
+			"Name": "右眉　変形"
+		},
+		{
+			"Id": "ParamXSupport",
+			"GroupId": "ParamGroup16",
+			"Name": "角度X补正"
+		},
+		{
+			"Id": "ParamAngleX",
+			"GroupId": "ParamGroup16",
+			"Name": "角度 X"
+		},
+		{
+			"Id": "ParamAngleY",
+			"GroupId": "ParamGroup16",
+			"Name": "角度 Y"
+		},
+		{
+			"Id": "ParamAngleZ",
+			"GroupId": "ParamGroup16",
+			"Name": "角度 Z"
+		},
+		{
+			"Id": "ParamBodyAngleX",
+			"GroupId": "ParamGroup17",
+			"Name": "身体旋转　X"
+		},
+		{
+			"Id": "ParamBodyAngleXX",
+			"GroupId": "ParamGroup17",
+			"Name": "下半身　XX"
+		},
+		{
+			"Id": "ParamCoatArmL",
+			"GroupId": "ParamGroup17",
+			"Name": "外套抬手变形L"
+		},
+		{
+			"Id": "ParamCoatArmR",
+			"GroupId": "ParamGroup17",
+			"Name": "外套抬手变形R"
+		},
+		{
+			"Id": "ParamBodyAngleY",
+			"GroupId": "ParamGroup17",
+			"Name": "身体旋转　Y"
+		},
+		{
+			"Id": "ParamBodyAngleZ",
+			"GroupId": "ParamGroup17",
+			"Name": "身体旋转　Z"
+		},
+		{
+			"Id": "ParamBodyAnglePhyZ",
+			"GroupId": "ParamGroup17",
+			"Name": "小物物理Z"
+		},
+		{
+			"Id": "ParamBodyAngleXZ",
+			"GroupId": "ParamGroup17",
+			"Name": "扭腰　XZ"
+		},
+		{
+			"Id": "ParamBodyAngleXZ2",
+			"GroupId": "ParamGroup17",
+			"Name": "下半身Y"
+		},
+		{
+			"Id": "ParamBreath",
+			"GroupId": "ParamGroup17",
+			"Name": "呼吸"
+		},
+		{
+			"Id": "ParamHairFrontX1",
+			"GroupId": "ParamGroup7",
+			"Name": "摇动 前发整体X"
+		},
+		{
+			"Id": "ParamHairFrontX2",
+			"GroupId": "ParamGroup7",
+			"Name": "摇动 前发发梢X"
+		},
+		{
+			"Id": "ParamHairFrontY",
+			"GroupId": "ParamGroup7",
+			"Name": "摇动 前发弹性Y"
+		},
+		{
+			"Id": "ParamHairFrontY2",
+			"GroupId": "ParamGroup7",
+			"Name": "摇动 前发蓬松Y"
+		},
+		{
+			"Id": "ParamHairSideX3",
+			"GroupId": "ParamGroup7",
+			"Name": "摇动 侧发X整体"
+		},
+		{
+			"Id": "ParamHairSideY",
+			"GroupId": "ParamGroup7",
+			"Name": "摇动 侧发Y长短"
+		},
+		{
+			"Id": "ParamHairSideX2",
+			"GroupId": "ParamGroup7",
+			"Name": "摇动 侧发X中下"
+		},
+		{
+			"Id": "ParamHairSideX",
+			"GroupId": "ParamGroup7",
+			"Name": "摇动 侧发X发梢"
+		},
+		{
+			"Id": "ParamHairBackX2",
+			"GroupId": "ParamGroup7",
+			"Name": "摇动 后发X中间整体"
+		},
+		{
+			"Id": "ParamHairBackX1",
+			"GroupId": "ParamGroup7",
+			"Name": "摇动 后发X下段"
+		},
+		{
+			"Id": "ParamHairBackX3",
+			"GroupId": "ParamGroup7",
+			"Name": "摇动 后发X发梢"
+		},
+		{
+			"Id": "ParamHairBackY1",
+			"GroupId": "ParamGroup7",
+			"Name": "蓬松后发Y1"
+		},
+		{
+			"Id": "ParamHairBackY2",
+			"GroupId": "ParamGroup7",
+			"Name": "蓬松后发Y2"
+		},
+		{
+			"Id": "ParamHairBackY3",
+			"GroupId": "ParamGroup7",
+			"Name": "弹性后发Y3"
+		},
+		{
+			"Id": "ParamChestPhyX",
+			"GroupId": "ParamGroup10",
+			"Name": "胸部左右"
+		},
+		{
+			"Id": "ParamChestPhyX2",
+			"GroupId": "ParamGroup10",
+			"Name": "胸部甩动"
+		},
+		{
+			"Id": "ParamChestPhyY",
+			"GroupId": "ParamGroup10",
+			"Name": "胸部上下"
+		},
+		{
+			"Id": "ParamChestPhyY2",
+			"GroupId": "ParamGroup10",
+			"Name": "胸部扩缩"
+		},
+		{
+			"Id": "ParamNecklaceY",
+			"GroupId": "ParamGroup10",
+			"Name": "项链上下"
+		},
+		{
+			"Id": "ParamClothePhyX1",
+			"GroupId": "ParamGroup10",
+			"Name": "衣服摇摆"
+		},
+		{
+			"Id": "ParamClothePhyX2",
+			"GroupId": "ParamGroup10",
+			"Name": "衣服甩动"
+		},
+		{
+			"Id": "ParamClothePhyY1",
+			"GroupId": "ParamGroup10",
+			"Name": "衣服扩缩"
+		},
+		{
+			"Id": "ParamClothePhyY2",
+			"GroupId": "ParamGroup10",
+			"Name": "衣服弹性"
+		},
+		{
+			"Id": "ParamSkirtPhyX1",
+			"GroupId": "ParamGroup10",
+			"Name": "裙摆摇摆"
+		},
+		{
+			"Id": "ParamSkirtPhyX2",
+			"GroupId": "ParamGroup10",
+			"Name": "裙摆甩动"
+		},
+		{
+			"Id": "ParamSkirtPhyY1",
+			"GroupId": "ParamGroup10",
+			"Name": "裙摆扩缩"
+		},
+		{
+			"Id": "ParamSkirtPhyY2",
+			"GroupId": "ParamGroup10",
+			"Name": "裙摆弹性"
+		},
+		{
+			"Id": "ParamCoatMask",
+			"GroupId": "ParamGroup22",
+			"Name": "外套遮挡手臂调整L"
+		},
+		{
+			"Id": "ParamHandFingerLPhy",
+			"GroupId": "ParamGroup22",
+			"Name": "手指L物理"
+		},
+		{
+			"Id": "ParamWristLPhy",
+			"GroupId": "ParamGroup22",
+			"Name": "手腕物理L"
+		},
+		{
+			"Id": "ParamLowerArmPhy",
+			"GroupId": "ParamGroup22",
+			"Name": "小臂物理L"
+		},
+		{
+			"Id": "ParamUpArmPhy",
+			"GroupId": "ParamGroup22",
+			"Name": "大臂物理L"
+		},
+		{
+			"Id": "ParamCoatMask2",
+			"GroupId": "ParamGroup23",
+			"Name": "外套遮挡手臂调整R"
+		},
+		{
+			"Id": "ParamHandFingerRPhy",
+			"GroupId": "ParamGroup23",
+			"Name": "手指R物理"
+		},
+		{
+			"Id": "ParamUpArmPhyR",
+			"GroupId": "ParamGroup23",
+			"Name": "大臂物理R"
+		},
+		{
+			"Id": "ParamLowerArmPhyR",
+			"GroupId": "ParamGroup23",
+			"Name": "小臂物理R"
+		},
+		{
+			"Id": "ParamWristLPhyR",
+			"GroupId": "ParamGroup23",
+			"Name": "手腕物理R"
+		},
+		{
+			"Id": "ParamnacklaceKira",
+			"GroupId": "ParamGroup11",
+			"Name": "项链闪光"
+		},
+		{
+			"Id": "ParamEarringsL1",
+			"GroupId": "ParamGroup12",
+			"Name": "L耳环摇动"
+		},
+		{
+			"Id": "ParamEarringsL2",
+			"GroupId": "ParamGroup12",
+			"Name": "L耳环摇动2"
+		},
+		{
+			"Id": "ParamEarringsL3",
+			"GroupId": "ParamGroup12",
+			"Name": "L耳环摇动3"
+		},
+		{
+			"Id": "ParamEarringsL4",
+			"GroupId": "ParamGroup12",
+			"Name": "L耳环旋转"
+		},
+		{
+			"Id": "ParamEarringsL6",
+			"GroupId": "ParamGroup12",
+			"Name": "L耳环旋转Y"
+		},
+		{
+			"Id": "ParamEarringsL5",
+			"GroupId": "ParamGroup12",
+			"Name": "L耳环闪光"
+		},
+		{
+			"Id": "ParamEarringsR1",
+			"GroupId": "ParamGroup13",
+			"Name": "R耳环摇动"
+		},
+		{
+			"Id": "ParamEarringsR2",
+			"GroupId": "ParamGroup13",
+			"Name": "R耳环摇动2"
+		},
+		{
+			"Id": "ParamEarringsR3",
+			"GroupId": "ParamGroup13",
+			"Name": "R耳环摇动3"
+		},
+		{
+			"Id": "ParamEarringsR4",
+			"GroupId": "ParamGroup13",
+			"Name": "R耳环旋转"
+		},
+		{
+			"Id": "ParamEarringsLR6",
+			"GroupId": "ParamGroup13",
+			"Name": "R耳环旋转Y"
+		},
+		{
+			"Id": "ParamEarringsR5",
+			"GroupId": "ParamGroup13",
+			"Name": "R耳环闪光"
+		},
+		{
+			"Id": "ParamWataPhy",
+			"GroupId": "ParamGroup21",
+			"Name": "挖耳勺物理"
+		},
+		{
+			"Id": "ParamWataPhy2",
+			"GroupId": "ParamGroup21",
+			"Name": "挖耳勺物理Y"
+		},
+		{
+			"Id": "ParamBowPhy",
+			"GroupId": "ParamGroup21",
+			"Name": "帽子蝴蝶结"
+		},
+		{
+			"Id": "ParamBowPhy2",
+			"GroupId": "ParamGroup21",
+			"Name": "帽子蝴蝶结蓬松"
+		},
+		{
+			"Id": "ParamBagPhy1",
+			"GroupId": "ParamGroup21",
+			"Name": "包左右摇摆"
+		},
+		{
+			"Id": "ParamBagPhy2",
+			"GroupId": "ParamGroup21",
+			"Name": "包本体摇摆"
+		},
+		{
+			"Id": "ParamBagPhy3",
+			"GroupId": "ParamGroup21",
+			"Name": "包带弹性"
+		},
+		{
+			"Id": "ParamBagPhyX",
+			"GroupId": "ParamGroup21",
+			"Name": "包旋转X"
+		},
+		{
+			"Id": "ParamBagPhyY",
+			"GroupId": "ParamGroup21",
+			"Name": "包旋转Y"
+		},
+		{
+			"Id": "ParamBodyInput",
+			"GroupId": "ParamGroup15",
+			"Name": "身体输入"
+		},
+		{
+			"Id": "ParamSwitchBodyCtrl",
+			"GroupId": "ParamGroup15",
+			"Name": "反绑开关"
+		},
+		{
+			"Id": "ParamPhysicsRAM",
+			"GroupId": "ParamGroup15",
+			"Name": "运算暂存"
+		},
+		{
+			"Id": "ParamBodyOutput",
+			"GroupId": "ParamGroup15",
+			"Name": "身体输出"
+		}
+	],
+	"ParameterGroups": [
+		{
+			"Id": "ParamGroup20",
+			"GroupId": "",
+			"Name": "穿戴物品"
+		},
+		{
+			"Id": "ParamGroup8",
+			"GroupId": "",
+			"Name": "表情开关"
+		},
+		{
+			"Id": "ParamGroup25",
+			"GroupId": "",
+			"Name": "右手动作"
+		},
+		{
+			"Id": "ParamGroup24",
+			"GroupId": "",
+			"Name": "左手动作"
+		},
+		{
+			"Id": "ParamGroup14",
+			"GroupId": "",
+			"Name": "反绑开关"
+		},
+		{
+			"Id": "ParamGroup4",
+			"GroupId": "",
+			"Name": "嘴"
+		},
+		{
+			"Id": "ParamGroup6",
+			"GroupId": "",
+			"Name": "嘴-音频同步"
+		},
+		{
+			"Id": "ParamGroup9",
+			"GroupId": "",
+			"Name": "表情物理"
+		},
+		{
+			"Id": "ParamGroup",
+			"GroupId": "",
+			"Name": "眼"
+		},
+		{
+			"Id": "ParamGroup3",
+			"GroupId": "",
+			"Name": "L眼睛物理"
+		},
+		{
+			"Id": "ParamGroup5",
+			"GroupId": "",
+			"Name": "R眼睛物理"
+		},
+		{
+			"Id": "ParamGroup2",
+			"GroupId": "",
+			"Name": "眉"
+		},
+		{
+			"Id": "ParamGroup19",
+			"GroupId": "",
+			"Name": "---↑表情|角度↓---"
+		},
+		{
+			"Id": "ParamGroup16",
+			"GroupId": "",
+			"Name": "头"
+		},
+		{
+			"Id": "ParamGroup17",
+			"GroupId": "",
+			"Name": "身体"
+		},
+		{
+			"Id": "ParamGroup7",
+			"GroupId": "",
+			"Name": "头发物理"
+		},
+		{
+			"Id": "ParamGroup10",
+			"GroupId": "",
+			"Name": "身体物理"
+		},
+		{
+			"Id": "ParamGroup22",
+			"GroupId": "",
+			"Name": "左手臂"
+		},
+		{
+			"Id": "ParamGroup23",
+			"GroupId": "",
+			"Name": "右手臂"
+		},
+		{
+			"Id": "ParamGroup11",
+			"GroupId": "",
+			"Name": "特效物理"
+		},
+		{
+			"Id": "ParamGroup18",
+			"GroupId": "",
+			"Name": "---↑角度|道具↓---"
+		},
+		{
+			"Id": "ParamGroup12",
+			"GroupId": "",
+			"Name": "L饰品物理"
+		},
+		{
+			"Id": "ParamGroup13",
+			"GroupId": "",
+			"Name": "R饰品物理"
+		},
+		{
+			"Id": "ParamGroup21",
+			"GroupId": "",
+			"Name": "装饰物理"
+		},
+		{
+			"Id": "ParamGroup15",
+			"GroupId": "",
+			"Name": "物理反绑"
+		}
+	],
+	"Parts": [
+		{
+			"Id": "Part16",
+			"Name": "warermark.png"
+		},
+		{
+			"Id": "Model",
+			"Name": "Model"
+		},
+		{
+			"Id": "ArmUP",
+			"Name": "ArmUP"
+		},
+		{
+			"Id": "HairHL",
+			"Name": "HairHL"
+		},
+		{
+			"Id": "Bang",
+			"Name": "Bang"
+		},
+		{
+			"Id": "Emotion",
+			"Name": "Emotion"
+		},
+		{
+			"Id": "EB",
+			"Name": "EB"
+		},
+		{
+			"Id": "Part",
+			"Name": "Eye_R"
+		},
+		{
+			"Id": "Eye_L",
+			"Name": "Eye_L"
+		},
+		{
+			"Id": "Nose",
+			"Name": "Nose"
+		},
+		{
+			"Id": "Mouth",
+			"Name": "Mouth"
+		},
+		{
+			"Id": "Face",
+			"Name": "Face"
+		},
+		{
+			"Id": "Earring",
+			"Name": "Earring"
+		},
+		{
+			"Id": "Ear",
+			"Name": "Ear"
+		},
+		{
+			"Id": "SideHair",
+			"Name": "SideHair"
+		},
+		{
+			"Id": "Coat",
+			"Name": "Coat"
+		},
+		{
+			"Id": "Suit",
+			"Name": "Suit"
+		},
+		{
+			"Id": "MermaidSkirt",
+			"Name": "MermaidSkirt"
+		},
+		{
+			"Id": "Leg",
+			"Name": "Leg"
+		},
+		{
+			"Id": "Nack",
+			"Name": "Nack"
+		},
+		{
+			"Id": "Berate",
+			"Name": "Berate"
+		},
+		{
+			"Id": "BackBody",
+			"Name": "BackBody"
+		},
+		{
+			"Id": "BackSideHair",
+			"Name": "BackSideHair"
+		},
+		{
+			"Id": "BackHair",
+			"Name": "BackHair"
+		},
+		{
+			"Id": "BackItem",
+			"Name": "BackItem"
+		},
+		{
+			"Id": "Bow",
+			"Name": "Bow"
+		},
+		{
+			"Id": "CoatArmUP",
+			"Name": "CoatArmUP"
+		},
+		{
+			"Id": "Bang2",
+			"Name": "Bang"
+		},
+		{
+			"Id": "Bang_L",
+			"Name": "Bang_L"
+		},
+		{
+			"Id": "Bang_R",
+			"Name": "Bang_R"
+		},
+		{
+			"Id": "Part15",
+			"Name": "TearR"
+		},
+		{
+			"Id": "Pienn",
+			"Name": "Pienn_R"
+		},
+		{
+			"Id": "Part2",
+			"Name": "Oh_R"
+		},
+		{
+			"Id": "Lash_L",
+			"Name": "Lash_L"
+		},
+		{
+			"Id": "Money",
+			"Name": "Money"
+		},
+		{
+			"Id": "Pieen_L",
+			"Name": "Pieen_L"
+		},
+		{
+			"Id": "Oh",
+			"Name": "Oh"
+		},
+		{
+			"Id": "EyeBall_L",
+			"Name": "EyeBall_L"
+		},
+		{
+			"Id": "Eyelid_L",
+			"Name": "Eyelid_L"
+		},
+		{
+			"Id": "CheekPuff",
+			"Name": "CheekPuff"
+		},
+		{
+			"Id": "Mouth_IN",
+			"Name": "Mouth_IN"
+		},
+		{
+			"Id": "Brooch",
+			"Name": "Brooch"
+		},
+		{
+			"Id": "RedSkirt",
+			"Name": "RedSkirt"
+		},
+		{
+			"Id": "Nacklace",
+			"Name": "Nacklace"
+		},
+		{
+			"Id": "Top",
+			"Name": "Top"
+		},
+		{
+			"Id": "Belt",
+			"Name": "Belt"
+		},
+		{
+			"Id": "Chest",
+			"Name": "Chest"
+		},
+		{
+			"Id": "Closet",
+			"Name": "Closet"
+		},
+		{
+			"Id": "Skirt",
+			"Name": "Skirt"
+		},
+		{
+			"Id": "Bag",
+			"Name": "Bag"
+		},
+		{
+			"Id": "Arm",
+			"Name": "Arm"
+		},
+		{
+			"Id": "Shoes",
+			"Name": "Shoes"
+		},
+		{
+			"Id": "Leg_L",
+			"Name": "Leg_L"
+		},
+		{
+			"Id": "Part9",
+			"Name": "CoatArmBackR"
+		},
+		{
+			"Id": "Part6",
+			"Name": "CoatArmback"
+		},
+		{
+			"Id": "Tear",
+			"Name": "Tear"
+		},
+		{
+			"Id": "Chest_L",
+			"Name": "Chest_L"
+		},
+		{
+			"Id": "Chest_R",
+			"Name": "Chest_R"
+		},
+		{
+			"Id": "CoatArm",
+			"Name": "CoatArm"
+		},
+		{
+			"Id": "LowerArmL",
+			"Name": "手臂L"
+		},
+		{
+			"Id": "BlackArm",
+			"Name": "BlackArm"
+		},
+		{
+			"Id": "Part8",
+			"Name": "CoatArmR"
+		},
+		{
+			"Id": "Part3",
+			"Name": "手臂R"
+		},
+		{
+			"Id": "Part5",
+			"Name": "CoatArm"
+		},
+		{
+			"Id": "Part4",
+			"Name": "黑色手臂L"
+		},
+		{
+			"Id": "Hand_Left",
+			"Name": "左手"
+		},
+		{
+			"Id": "Part7",
+			"Name": "黑色手臂R"
+		},
+		{
+			"Id": "Part10",
+			"Name": "手R"
+		},
+		{
+			"Id": "Hand1",
+			"Name": "Hand1"
+		},
+		{
+			"Id": "Hand2",
+			"Name": "Hand2"
+		},
+		{
+			"Id": "Hand3",
+			"Name": "Hand3"
+		},
+		{
+			"Id": "HandOpen_L",
+			"Name": "HandOpen_L"
+		},
+		{
+			"Id": "Part14",
+			"Name": "左手道具"
+		},
+		{
+			"Id": "Part13",
+			"Name": "左手back"
+		},
+		{
+			"Id": "Part12",
+			"Name": "手持道具R"
+		},
+		{
+			"Id": "Part11",
+			"Name": "手R后"
+		},
+		{
+			"Id": "Item",
+			"Name": "Item"
+		},
+		{
+			"Id": "Mimikaki",
+			"Name": "Mimikaki"
+		}
+	],
+	"CombinedParameters": [
+		[
+			"ParamMouthForm",
+			"ParamMouthOpenY"
+		],
+		[
+			"ParamEyeBallX",
+			"ParamEyeBallY"
+		],
+		[
+			"ParamAngleX",
+			"ParamAngleY"
+		],
+		[
+			"ParamBagPhyX",
+			"ParamBagPhyY"
+		]
+	]
+}

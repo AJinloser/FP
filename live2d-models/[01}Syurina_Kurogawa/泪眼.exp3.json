@@ -1,0 +1,50 @@
+{
+    "Type": "Live2D Expression",
+    "Parameters": [
+        {
+            "Id": "ParamEyeHeart",
+            "Value": 0.0,
+            "Blend": "Add"
+        },
+        {
+            "Id": "ParamEyeMoney",
+            "Value": 0.0,
+            "Blend": "Add"
+        },
+        {
+            "Id": "ParamPienn",
+            "Value": 1.0,
+            "Blend": "Add"
+        },
+        {
+            "Id": "ParamTear",
+            "Value": 1.0,
+            "Blend": "Add"
+        },
+        {
+            "Id": "ParamTearKL",
+            "Value": -1.0,
+            "Blend": "Add"
+        },
+        {
+            "Id": "ParamTearKR",
+            "Value": -1.0,
+            "Blend": "Add"
+        },
+        {
+            "Id": "ParamBrowLForm",
+            "Value": -1.0,
+            "Blend": "Add"
+        },
+        {
+            "Id": "ParamBrowRForm",
+            "Value": -1.0,
+            "Blend": "Add"
+        },
+        {
+            "Id": "ParamWaterMark",
+            "Value": -1.0,
+            "Blend": "Add"
+        }
+    ]
+}

@@ -37,9 +37,9 @@
         "name": "LL-local",
         "description": "test",
         "url": "/live2d-models/LL/LL.model3.json",
-        "kScale": 0.5,
+        "kScale": 0.2,
         "initialXshift": 0,
-        "initialYshift": 0,
+        "initialYshift": 600,
         "kXOffset": 1150,
         "idleMotionGroupName": "idle",
         "emotionMap": {
@@ -177,6 +177,101 @@
             "HitAreaBody": {
                 "": 1
             }
+        }
+    },
+    {
+        "name": "capybara",
+        "description": "斐牌卡皮巴拉",
+        "url": "/live2d-models/斐牌卡皮巴拉/斐牌卡皮巴拉.model3.json",
+        "kScale": 0.5,
+        "initialXshift": 0,
+        "initialYshift": 0,
+        "kXOffset": 1150,
+        "idleMotionGroupName": "idle",
+        "emotionMap": {
+            "neutral": 0,
+            "anger": 4,
+            "disgust": 5,
+            "fear": 1,
+            "joy": 2,
+            "sadness": 3,
+            "surprise": 6
+        },
+        "tapMotions": {
+            "body": {
+                "左键单击": 1
+            }
+        }
+    },
+    {
+        "name": "me",
+        "description": "我",
+        "url": "/live2d-models/我/我.model3.json",
+        "kScale": 0.2,
+        "initialXshift": 0,
+        "initialYshift": 700,
+        "kXOffset": 1150,
+        "idleMotionGroupName": "idle",
+        "emotionMap": {
+            "neutral": 0,
+            "joy": 1,
+            "sadness": 2,
+            "love": 3
+        }
+    },
+    {
+        "name": "samoyed",
+        "description": "萨摩耶小狗",
+        "url": "/live2d-models/萨摩耶小狗/萨摩耶小狗.model3.json",
+        "kScale": 0.5,
+        "initialXshift": 0,
+        "initialYshift": 0,
+        "kXOffset": 1150,
+        "emotionMap": {
+            "neutral": 0,
+            "joy": 1,
+            "sadness": 2,
+            "love": 3
+        }
+    },
+    {
+        "name": "syurina",
+        "description": "Syurina Kurogawa",
+        "url": "/live2d-models/[01}Syurina_Kurogawa/[01}Syurina_Kurogawa.model3.json",
+        "kScale": 0.2,
+        "initialXshift": 0,
+        "initialYshift": 600,
+        "kXOffset": 1150,
+        "idleMotionGroupName": "idle",
+        "emotionMap": {
+            "neutral": 0,
+            "anger": 2,
+            "disgust": 2,
+            "fear": 1,
+            "joy": 3,
+            "smirk": 3,
+            "sadness": 1,
+            "surprise": 3
+        }
+    },
+    {
+        "name": "witch",
+        "description": "魔女",
+        "url": "/live2d-models/魔女/魔女.model3.json",
+        "kScale": 0.2,
+        "initialXshift": 0,
+        "initialYshift": 600,
+        "kXOffset": 1150,
+        "idleMotionGroupName": "idle",
+        "emotionMap": {
+            "neutral": 0,
+            "anger": 2,
+            "disgust": 2,
+            "fear": 1,
+            "joy": 3,
+            "smirk": 3,
+            "sadness": 1,
+            "surprise": 3
         }
     }
 ]

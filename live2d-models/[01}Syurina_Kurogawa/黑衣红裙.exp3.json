@@ -1,0 +1,35 @@
+{
+    "Type": "Live2D Expression",
+    "Parameters": [
+        {
+            "Id": "ParamClothes",
+            "Value": -1.0,
+            "Blend": "Add"
+        },
+        {
+            "Id": "ParamTakeBerate",
+            "Value": -1.0,
+            "Blend": "Add"
+        },
+        {
+            "Id": "ParamTakeEarrings",
+            "Value": -1.0,
+            "Blend": "Add"
+        },
+        {
+            "Id": "ParamEyeShadow",
+            "Value": -1.0,
+            "Blend": "Add"
+        },
+        {
+            "Id": "ParamBag",
+            "Value": -1.0,
+            "Blend": "Add"
+        },
+        {
+            "Id": "ParamWaterMark",
+            "Value": -1.0,
+            "Blend": "Add"
+        }
+    ]
+}

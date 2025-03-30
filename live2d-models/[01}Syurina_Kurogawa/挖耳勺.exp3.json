@@ -1,0 +1,60 @@
+{
+    "Type": "Live2D Expression",
+    "Parameters": [
+        {
+            "Id": "ParamCoffee",
+            "Value": 0.0,
+            "Blend": "Add"
+        },
+        {
+            "Id": "ParamPen",
+            "Value": 0.0,
+            "Blend": "Add"
+        },
+        {
+            "Id": "ParamMimigaki",
+            "Value": 1.0,
+            "Blend": "Add"
+        },
+        {
+            "Id": "ParamArmRFB",
+            "Value": 1.0,
+            "Blend": "Add"
+        },
+        {
+            "Id": "ParamHand1R",
+            "Value": -1.0,
+            "Blend": "Add"
+        },
+        {
+            "Id": "ParamHand2R",
+            "Value": 1.0,
+            "Blend": "Add"
+        },
+        {
+            "Id": "ParamHand3R",
+            "Value": 0.0,
+            "Blend": "Add"
+        },
+        {
+            "Id": "ParamLowerArmRroll",
+            "Value": 26.179676055908204,
+            "Blend": "Add"
+        },
+        {
+            "Id": "ParamUpArmRroll",
+            "Value": 2.2586095333099367,
+            "Blend": "Add"
+        },
+        {
+            "Id": "ParamShoulderR",
+            "Value": 6.947012901306152,
+            "Blend": "Add"
+        },
+        {
+            "Id": "ParamWaterMark",
+            "Value": -1.0,
+            "Blend": "Add"
+        }
+    ]
+}

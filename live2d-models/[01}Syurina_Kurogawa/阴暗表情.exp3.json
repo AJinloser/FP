@@ -1,0 +1,20 @@
+{
+    "Type": "Live2D Expression",
+    "Parameters": [
+        {
+            "Id": "ParamHLOff",
+            "Value": 1.0,
+            "Blend": "Add"
+        },
+        {
+            "Id": "ParamFaceDark",
+            "Value": 1.0,
+            "Blend": "Add"
+        },
+        {
+            "Id": "ParamWaterMark",
+            "Value": -1.0,
+            "Blend": "Add"
+        }
+    ]
+}

@@ -1,0 +1,65 @@
+{
+    "Type": "Live2D Expression",
+    "Parameters": [
+        {
+            "Id": "ParamPhone",
+            "Value": 1.0,
+            "Blend": "Add"
+        },
+        {
+            "Id": "ParamPad",
+            "Value": 0.0,
+            "Blend": "Add"
+        },
+        {
+            "Id": "ParamArmLFB",
+            "Value": 1.0,
+            "Blend": "Add"
+        },
+        {
+            "Id": "ParamHand1L",
+            "Value": -1.0,
+            "Blend": "Add"
+        },
+        {
+            "Id": "ParamHand2L",
+            "Value": 0.0,
+            "Blend": "Add"
+        },
+        {
+            "Id": "ParamHand3L",
+            "Value": 1.0,
+            "Blend": "Add"
+        },
+        {
+            "Id": "ParamHandOpenL",
+            "Value": 0.0,
+            "Blend": "Add"
+        },
+        {
+            "Id": "ParamHandOpenL2",
+            "Value": 0.0,
+            "Blend": "Add"
+        },
+        {
+            "Id": "ParamWristLroll",
+            "Value": 8.726556777954102,
+            "Blend": "Add"
+        },
+        {
+            "Id": "ParamLowerArmLroll",
+            "Value": 26.17966079711914,
+            "Blend": "Add"
+        },
+        {
+            "Id": "ParamUpArmLroll",
+            "Value": -5.133234977722168,
+            "Blend": "Add"
+        },
+        {
+            "Id": "ParamWaterMark",
+            "Value": -1.0,
+            "Blend": "Add"
+        }
+    ]
+}
