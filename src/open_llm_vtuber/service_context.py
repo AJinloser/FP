@@ -263,6 +263,29 @@ class ServiceContext:
         else:
             logger.info("Translation already initialized with the same config.")
 
+    async def reinit_tts(self, tts_config: TTSConfig) -> None:
+        """强制重新初始化TTS引擎"""
+        try:
+            logger.info(f"Reinitializing TTS: {tts_config.tts_model}")
+            
+            # # 清理旧的TTS引擎
+            # if hasattr(self.tts_engine, 'cleanup'):
+            #     await self.tts_engine.cleanup()
+            
+            # 创建新的TTS引擎
+            self.tts_engine = TTSFactory.get_tts_engine(
+                tts_config.tts_model,
+                **getattr(tts_config, tts_config.tts_model.lower()).model_dump(),
+            )
+            
+            # 保存新的配置
+            self.character_config.tts_config = tts_config
+            logger.info(f"Successfully reinitialized TTS engine: {tts_config.tts_model}")
+            
+        except Exception as e:
+            logger.error(f"Failed to reinitialize TTS engine: {e}")
+            raise
+
     # ==== utils
 
     def construct_system_prompt(self, persona_prompt: str) -> str:

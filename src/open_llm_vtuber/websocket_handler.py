@@ -5,6 +5,7 @@ import json
 from enum import Enum
 import numpy as np
 from loguru import logger
+import os
 
 from .service_context import ServiceContext
 from .chat_group import (
@@ -94,6 +95,9 @@ class WebSocketHandler:
             "fetch-backgrounds": self._handle_fetch_backgrounds,
             "audio-play-start": self._handle_audio_play_start,
             "fetch-model-list": self._handle_fetch_model_list,
+            "fetch-tts-settings": self._handle_fetch_tts_settings,
+            "fetch-tts-models": self._handle_fetch_tts_models,
+            "update-tts-settings": self._handle_update_tts_settings,
         }
 
     async def handle_new_connection(
@@ -589,3 +593,152 @@ class WebSocketHandler:
                     "message": f"获取模型列表失败: {str(e)}"
                 })
             )
+
+    async def _handle_fetch_tts_settings(self, websocket: WebSocket, client_uid: str, data: dict) -> None:
+        """处理获取TTS设置的请求"""
+        try:
+            context = self.client_contexts[client_uid]
+            tts_config = context.character_config.tts_config
+            requested_model = data.get("tts_model")
+            
+            if requested_model:
+                # 获取特定模型的配置
+                model_config = getattr(tts_config, requested_model)
+                if model_config:
+                    await websocket.send_text(json.dumps({
+                        "type": "tts-settings",
+                        "tts_settings": {
+                            "tts_model": requested_model,
+                            requested_model: model_config.model_dump()
+                        }
+                    }))
+                else:
+                    # 如果没有配置，返回空配置
+                    await websocket.send_text(json.dumps({
+                        "type": "tts-settings",
+                        "tts_settings": {
+                            "tts_model": requested_model,
+                            requested_model: {}
+                        }
+                    }))
+            else:
+                # 如果没有指定模型，返回当前的完整配置
+                await websocket.send_text(json.dumps({
+                    "type": "tts-settings",
+                    "tts_settings": {
+                        "tts_model": tts_config.tts_model,
+                        tts_config.tts_model: getattr(tts_config, tts_config.tts_model).model_dump()
+                    }
+                }))
+        except Exception as e:
+            logger.error(f"获取TTS设置失败: {str(e)}")
+            await websocket.send_text(json.dumps({
+                "type": "error",
+                "message": f"获取TTS设置失败: {str(e)}"
+            }))
+
+    async def _handle_fetch_tts_models(self, websocket: WebSocket, client_uid: str, data: dict) -> None:
+        """处理获取可用TTS模型列表的请求"""
+        try:
+            context = self.client_contexts[client_uid]
+            current_tts_model = context.character_config.tts_config.tts_model
+
+            # 在线服务型TTS模型（始终可用，但需要API key等配置）
+            online_models = {
+                "edge_tts",      # Edge TTS（无需额外安装）
+                "azure_tts",     # Azure TTS服务
+                "fish_api_tts",  # Fish API TTS服务
+            }
+
+            # 本地TTS模型与其对应的文件夹前缀映射
+            local_model_prefixes = {
+                "bark_tts": "bark",
+                "cosyvoice_tts": "cosyvoice",
+                "melo_tts": "melo",
+                "coqui_tts": "coqui",
+                "x_tts": "xtts",
+                "gpt_sovits_tts": "gpt_sovits",
+                "sherpa_onnx_tts": "sherpa-onnx"
+            }
+
+            # 检查本地模型是否可用
+            available_models = set()
+            available_models.update(online_models)  # 添加在线服务
+
+            # 获取tts-models目录路径
+            tts_models_dir = "tts-models"  # 或者从配置中获取路径
+            if os.path.exists(tts_models_dir):
+                # 获取tts-models目录下的所有文件夹
+                model_folders = [f for f in os.listdir(tts_models_dir) 
+                               if os.path.isdir(os.path.join(tts_models_dir, f))]
+                
+                # 检查每个本地模型
+                for model_name, prefix in local_model_prefixes.items():
+                    # 检查是否存在以对应前缀开头的文件夹
+                    if any(folder.startswith(prefix) for folder in model_folders):
+                        available_models.add(model_name)
+                        logger.debug(f"Found local TTS model: {model_name}")
+                    else:
+                        logger.debug(f"Local TTS model not found: {model_name}")
+            else:
+                logger.warning(f"TTS models directory not found: {tts_models_dir}")
+
+            # 将可用模型列表和当前模型发送给客户端
+            await websocket.send_text(json.dumps({
+                "type": "available-tts-models",
+                "available_tts_models": list(available_models),
+                "current_tts_model": current_tts_model
+            }))
+
+        except Exception as e:
+            logger.error(f"获取TTS模型列表失败: {str(e)}")
+            await websocket.send_text(json.dumps({
+                "type": "error",
+                "message": f"获取TTS模型列表失败: {str(e)}"
+            }))
+
+    async def _handle_update_tts_settings(self, websocket: WebSocket, client_uid: str, data: dict) -> None:
+        try:
+            context = self.client_contexts[client_uid]
+            new_settings = data.get("settings", {})
+            
+            # 保存旧的TTS引擎以便出错时恢复
+            old_tts_config = context.character_config.tts_config
+            old_tts_engine = context.tts_engine
+
+            try:
+                # 更新TTS配置
+                tts_config = context.character_config.tts_config
+                tts_config.tts_model = new_settings["tts_model"]
+                logger.info(f"TTS model updated to: {tts_config.tts_model}")
+                
+                # 根据模型类型更新具体设置
+                model_config = getattr(tts_config, new_settings["tts_model"])
+                for key, value in new_settings.items():
+                    if hasattr(model_config, key):
+                        setattr(model_config, key, value)
+                
+                # 使用新的reinit_tts函数强制重新初始化TTS引擎
+                await context.reinit_tts(tts_config)
+                
+                # 测试新的TTS引擎
+                test_text = "TTS engine test"
+                await context.tts_engine.async_generate_audio(text=test_text)
+                
+                await websocket.send_text(json.dumps({
+                    "type": "tts-settings-updated",
+                    "success": True
+                }))
+                
+            except Exception as e:
+                # 如果初始化新的TTS引擎失败，恢复到旧的配置
+                context.character_config.tts_config = old_tts_config
+                context.tts_engine = old_tts_engine
+                raise e
+
+        except Exception as e:
+            logger.error(f"Failed to update TTS settings: {e}")
+            await websocket.send_text(json.dumps({
+                "type": "error",
+                "message": f"Failed to update TTS settings: {str(e)}"
+            }))

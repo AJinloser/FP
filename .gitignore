@@ -68,3 +68,6 @@ mem.json
 conf.yaml.backup
 
 *.exe
+
+# TTS models
+tts-models/
