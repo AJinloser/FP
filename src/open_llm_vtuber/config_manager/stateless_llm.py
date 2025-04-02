@@ -16,8 +16,8 @@ class StatelessLLMBaseConfig(I18nMixin):
             en="""The method to use for prompting the interruption signal.
             If the provider supports inserting system prompt anywhere in the chat memory, use "system". 
             Otherwise, use "user". You don't need to change this setting.""",
-            zh="""用于表示中断信号的方法(提示词模式)。如果LLM支持在聊天记忆中的任何位置插入系统提示词，请使用“system”。
-            否则，请使用“user”。您不需要更改此设置。""",
+            zh="""用于表示中断信号的方法(提示词模式)。如果LLM支持在聊天记忆中的任何位置插入系统提示词，请使用"system"。
+            否则，请使用"user"。您不需要更改此设置。""",
         ),
     }
 
@@ -186,6 +186,42 @@ class LlamaCppConfig(StatelessLLMBaseConfig):
     }
 
 
+class DifyConfig(StatelessLLMBaseConfig):
+    """Configuration for Dify API."""
+
+    base_url: str = Field(..., alias="base_url")
+    llm_api_key: str = Field(..., alias="llm_api_key")
+    model: str = Field("default", alias="model")
+    temperature: float = Field(1.0, alias="temperature")
+    interrupt_method: Literal["system", "user"] = Field(
+        "user", alias="interrupt_method"
+    )
+
+    _DIFY_DESCRIPTIONS: ClassVar[dict[str, Description]] = {
+        "base_url": Description(
+            en="Base URL for Dify API", 
+            zh="Dify API 的基础 URL"
+        ),
+        "llm_api_key": Description(
+            en="API key for authentication", 
+            zh="API 认证密钥"
+        ),
+        "model": Description(
+            en="Model name (optional in Dify)", 
+            zh="模型名称（在 Dify 中可选）"
+        ),
+        "temperature": Description(
+            en="What sampling temperature to use, between 0 and 2",
+            zh="使用的采样温度，介于 0 和 2 之间",
+        ),
+    }
+
+    DESCRIPTIONS: ClassVar[dict[str, Description]] = {
+        **StatelessLLMBaseConfig.DESCRIPTIONS,
+        **_DIFY_DESCRIPTIONS,
+    }
+
+
 class StatelessLLMConfigs(I18nMixin, BaseModel):
     """Pool of LLM provider configurations.
     This class contains configurations for different LLM providers."""
@@ -202,6 +238,7 @@ class StatelessLLMConfigs(I18nMixin, BaseModel):
     claude_llm: ClaudeConfig | None = Field(None, alias="claude_llm")
     llama_cpp_llm: LlamaCppConfig | None = Field(None, alias="llama_cpp_llm")
     mistral_llm: MistralConfig | None = Field(None, alias="mistral_llm")
+    dify_llm: DifyConfig | None = Field(None, alias="dify_llm")
 
     DESCRIPTIONS: ClassVar[dict[str, Description]] = {
         "openai_compatible_llm": Description(
@@ -228,5 +265,9 @@ class StatelessLLMConfigs(I18nMixin, BaseModel):
         ),
         "llama_cpp_llm": Description(
             en="Configuration for local Llama.cpp", zh="本地Llama.cpp配置"
+        ),
+        "dify_llm": Description(
+            en="Configuration for Dify API",
+            zh="Dify API 配置"
         ),
     }

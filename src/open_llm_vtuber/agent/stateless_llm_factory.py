@@ -6,6 +6,7 @@ from .stateless_llm.stateless_llm_interface import StatelessLLMInterface
 from .stateless_llm.openai_compatible_llm import AsyncLLM as OpenAICompatibleLLM
 from .stateless_llm.ollama_llm import OllamaLLM
 from .stateless_llm.claude_llm import AsyncLLM as ClaudeLLM
+from .stateless_llm.dify_llm import AsyncLLM as DifyLLM
 
 
 class LLMFactory:
@@ -34,6 +35,13 @@ class LLMFactory:
                 llm_api_key=kwargs.get("llm_api_key"),
                 organization_id=kwargs.get("organization_id"),
                 project_id=kwargs.get("project_id"),
+            )
+        elif llm_provider == "dify_llm":
+            return DifyLLM(
+                base_url=kwargs.get("base_url"),
+                llm_api_key=kwargs.get("llm_api_key"),
+                model=kwargs.get("model", "default"),
+                temperature=kwargs.get("temperature", 1.0),
             )
         if llm_provider == "ollama_llm":
             return OllamaLLM(
