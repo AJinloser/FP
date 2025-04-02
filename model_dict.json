@@ -273,5 +273,45 @@
             "sadness": 1,
             "surprise": 3
         }
+    },
+    {
+        "name": "s1.1",
+        "description": "S1.1模型",
+        "url": "/live2d-models/s1.1/s1.1.model3.json",
+        "kScale": 0.5,
+        "initialXshift": 0,
+        "initialYshift": 0,
+        "kXOffset": 1150,
+        "idleMotionGroupName": "idle",
+        "emotionMap": {
+            "neutral": 0,
+            "anger": 2,
+            "disgust": 2,
+            "fear": 1,
+            "joy": 3,
+            "smirk": 3,
+            "sadness": 1,
+            "surprise": 3
+        }
+    },
+    {
+        "name": "xiaopmaid",
+        "description": "鱼香天天卷模型",
+        "url": "/live2d-models/鱼香天天卷版权所有XIAOPmaiddress/鱼香天天卷版权所有XIAOPmaiddress.model3.json",
+        "kScale": 0.5,
+        "initialXshift": 0,
+        "initialYshift": 0,
+        "kXOffset": 1150,
+        "idleMotionGroupName": "idle",
+        "emotionMap": {
+            "neutral": 0,
+            "anger": 2,
+            "disgust": 2,
+            "fear": 1,
+            "joy": 3,
+            "smirk": 3,
+            "sadness": 1,
+            "surprise": 3
+        }
     }
 ]

@@ -1,5 +1,5 @@
  character_config:
-  conf_name: "Syurina"
+  conf_name: "Syurina（有水印）"
   conf_uid: "zh_syurina_01"
   live2d_model_name: "syurina"
   persona_prompt: |

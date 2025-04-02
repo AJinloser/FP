@@ -1,5 +1,5 @@
 character_config:
-  conf_name: "我"
+  conf_name: "我（有水印）"
   conf_uid: "zh_me_01"
   live2d_model_name: "me"
   persona_prompt: |
