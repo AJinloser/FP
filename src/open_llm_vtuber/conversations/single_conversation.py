@@ -52,58 +52,64 @@ async def process_single_conversation(
         input_text = await process_user_input(
             user_input, context.asr_engine, websocket_send
         )
+        
+        # 如果是语音输入，直接返回，不继续处理
+        if isinstance(user_input, np.ndarray):
+            return ""
 
-        # Create batch input
-        batch_input = create_batch_input(
-            input_text=input_text,
-            images=images,
-            from_name=context.character_config.human_name,
-        )
-
-        # Store user message
-        if context.history_uid:
-            store_message(
-                conf_uid=context.character_config.conf_uid,
-                history_uid=context.history_uid,
-                role="human",
-                content=input_text,
-                name=context.character_config.human_name,
+        # 只有文本输入才继续处理
+        if input_text:
+            # Create batch input
+            batch_input = create_batch_input(
+                input_text=input_text,
+                images=images,
+                from_name=context.character_config.human_name,
             )
-        logger.info(f"User input: {input_text}")
-        if images:
-            logger.info(f"With {len(images)} images")
 
-        # Process agent response
-        full_response = await process_agent_response(
-            context=context,
-            batch_input=batch_input,
-            websocket_send=websocket_send,
-            tts_manager=tts_manager,
-        )
+            # Store user message
+            if context.history_uid:
+                store_message(
+                    conf_uid=context.character_config.conf_uid,
+                    history_uid=context.history_uid,
+                    role="human",
+                    content=input_text,
+                    name=context.character_config.human_name,
+                )
+            logger.info(f"User input: {input_text}")
+            if images:
+                logger.info(f"With {len(images)} images")
 
-        # Wait for any pending TTS tasks
-        if tts_manager.task_list:
-            await asyncio.gather(*tts_manager.task_list)
-            await websocket_send(json.dumps({"type": "backend-synth-complete"}))
-
-        await finalize_conversation_turn(
-            tts_manager=tts_manager,
-            websocket_send=websocket_send,
-            client_uid=client_uid,
-        )
-
-        if context.history_uid and full_response:
-            store_message(
-                conf_uid=context.character_config.conf_uid,
-                history_uid=context.history_uid,
-                role="ai",
-                content=full_response,
-                name=context.character_config.character_name,
-                avatar=context.character_config.avatar,
+            # Process agent response
+            full_response = await process_agent_response(
+                context=context,
+                batch_input=batch_input,
+                websocket_send=websocket_send,
+                tts_manager=tts_manager,
             )
-            logger.info(f"AI response: {full_response}")
 
-        return full_response
+            # Wait for any pending TTS tasks
+            if tts_manager.task_list:
+                await asyncio.gather(*tts_manager.task_list)
+                await websocket_send(json.dumps({"type": "backend-synth-complete"}))
+
+            await finalize_conversation_turn(
+                tts_manager=tts_manager,
+                websocket_send=websocket_send,
+                client_uid=client_uid,
+            )
+
+            if context.history_uid and full_response:
+                store_message(
+                    conf_uid=context.character_config.conf_uid,
+                    history_uid=context.history_uid,
+                    role="ai",
+                    content=full_response,
+                    name=context.character_config.character_name,
+                    avatar=context.character_config.avatar,
+                )
+                logger.info(f"AI response: {full_response}")
+
+            return full_response
 
     except asyncio.CancelledError:
         logger.info(f"🤡👍 Conversation {session_emoji} cancelled because interrupted.")

@@ -154,9 +154,13 @@ async def process_user_input(
         logger.info("Transcribing audio input...")
         input_text = await asr_engine.async_transcribe_np(user_input)
         await websocket_send(
-            json.dumps({"type": "user-input-transcription", "text": input_text})
+            json.dumps({
+                "type": "user-input-transcription", 
+                "text": input_text,
+                "should_process": False  # 添加标志位表示不需要继续处理
+            })
         )
-        return input_text
+        return ""
     return user_input
 
 
