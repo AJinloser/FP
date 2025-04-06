@@ -1,10 +1,11 @@
 from typing import AsyncIterator, List, Dict, Any, Callable, Literal
 from loguru import logger
+import uuid
 
 from .agent_interface import AgentInterface
 from ..output_types import SentenceOutput, DisplayText
 from ..stateless_llm.stateless_llm_interface import StatelessLLMInterface
-from ...chat_history_manager import get_history
+from ...chat_history_manager import get_history, get_metadata, update_metadate
 from ..transformers import (
     sentence_divider,
     actions_extractor,
@@ -61,6 +62,13 @@ class BasicMemoryAgent(AgentInterface):
         self.interrupt_method = interrupt_method
         # Flag to ensure a single interrupt handling per conversation
         self._interrupt_handled = False
+        
+        # 新增：会话相关的属性
+        self._conversation_id = None
+        self._user_id = None
+        self._conf_uid = None
+        self._history_uid = None
+        
         self._set_llm(llm)
         self.set_system(system)
         logger.info("BasicMemoryAgent initialized.")
@@ -89,6 +97,31 @@ class BasicMemoryAgent(AgentInterface):
             system = f"{system}\n\nIf you received `[interrupted by user]` signal, you were interrupted."
 
         self._system = system
+
+    def get_conversation_info(self) -> Dict[str, str]:
+        """获取当前会话信息"""
+        return {
+            "conversation_id": self._conversation_id,
+            "user_id": self._user_id
+        }
+
+    def set_conversation_info(self, conversation_id: str = None, user_id: str = None) -> None:
+        """设置会话信息"""
+        if conversation_id:
+            self._conversation_id = conversation_id
+            logger.info(f"设置新的 conversation_id: {conversation_id}")
+            # 如果有 conf_uid 和 history_uid，更新元数据
+            if self._conf_uid and self._history_uid:
+                update_metadate(self._conf_uid, self._history_uid, {
+                    "conversation_id": conversation_id
+                })
+        if user_id:
+            self._user_id = user_id
+            logger.info(f"设置新的 user_id: {user_id}")
+            if self._conf_uid and self._history_uid:
+                update_metadate(self._conf_uid, self._history_uid, {
+                    "user_id": user_id
+                })
 
     def _add_message(
         self,
@@ -127,24 +160,38 @@ class BasicMemoryAgent(AgentInterface):
         self._memory.append(message_data)
 
     def set_memory_from_history(self, conf_uid: str, history_uid: str) -> None:
-        """Load the memory from chat history"""
+        """从历史记录加载对话记录和会话信息"""
+        self._conf_uid = conf_uid
+        self._history_uid = history_uid
+        
+        # 获取元数据中的会话信息
+        metadata = get_metadata(conf_uid, history_uid)
+        logger.info(f"加载历史记录元数据: {metadata}")
+        
+        if metadata:
+            self._conversation_id = metadata.get("conversation_id")
+            self._user_id = metadata.get("user_id")
+            if not self._user_id:
+                # 如果没有用户ID，生成一个
+                self._user_id = f"user_{uuid.uuid4().hex[:8]}"
+                logger.info(f"生成新的 user_id: {self._user_id}")
+                update_metadate(conf_uid, history_uid, {"user_id": self._user_id})
+        
+        logger.info(f"当前会话信息 - conversation_id: {self._conversation_id}, user_id: {self._user_id}")
+        
+        # 加载对话历史
         messages = get_history(conf_uid, history_uid)
-
         self._memory = []
-        self._memory.append(
-            {
-                "role": "system",
-                "content": self._system,
-            }
-        )
+        self._memory.append({
+            "role": "system",
+            "content": self._system,
+        })
 
         for msg in messages:
-            self._memory.append(
-                {
-                    "role": "user" if msg["role"] == "human" else "assistant",
-                    "content": msg["content"],
-                }
-            )
+            self._memory.append({
+                "role": "user" if msg["role"] == "human" else "assistant",
+                "content": msg["content"],
+            })
 
     def handle_interrupt(self, heard_response: str) -> None:
         """
@@ -266,11 +313,26 @@ class BasicMemoryAgent(AgentInterface):
 
             messages = self._to_messages(input_data)
 
-            # Get token stream from LLM
-            token_stream = chat_func(messages, self._system)
+            logger.info(f"发送对话请求 - conversation_id: {self._conversation_id}, user_id: {self._user_id}")
+            
+            # 获取token流，传入会话信息
+            token_stream = chat_func(
+                messages, 
+                self._system,
+                conversation_id=self._conversation_id,
+                user_id=self._user_id
+            )
             complete_response = ""
 
             async for token in token_stream:
+                # 检查是否是会话ID更新的特殊标记
+                if token.startswith("__conversation_id:"):
+                    new_conversation_id = token.split(":", 1)[1]
+                    logger.info(f"收到新的 conversation_id: {new_conversation_id}")
+                    # 更新会话ID并保存到元数据
+                    self.set_conversation_info(conversation_id=new_conversation_id)
+                    continue
+                
                 yield token
                 complete_response += token
 

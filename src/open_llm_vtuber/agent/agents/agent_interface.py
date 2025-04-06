@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import AsyncIterator
+from typing import AsyncIterator, Dict
 from loguru import logger
 
 from ..output_types import BaseOutput
@@ -50,5 +50,26 @@ class AgentInterface(ABC):
         Args:
             conf_uid: str - Configuration ID
             history_uid: str - History ID
+        """
+        pass
+
+    @abstractmethod
+    def get_conversation_info(self) -> Dict[str, str]:
+        """
+        Get current conversation information including conversation_id and user_id
+
+        Returns:
+            Dict[str, str] - Dictionary containing conversation_id and user_id
+        """
+        pass
+
+    @abstractmethod
+    def set_conversation_info(self, conversation_id: str = None, user_id: str = None) -> None:
+        """
+        Set conversation information
+
+        Args:
+            conversation_id: str - Dify conversation ID
+            user_id: str - User identifier
         """
         pass

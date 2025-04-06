@@ -33,32 +33,42 @@ class AsyncLLM(StatelessLLMInterface):
         logger.info(f"已初始化 Dify LLM，API端点：{self.chat_endpoint}")
 
     async def chat_completion(
-        self, messages: List[Dict[str, Any]], system: str = None
+        self, 
+        messages: List[Dict[str, Any]], 
+        system: str = None,
+        conversation_id: str = "",
+        user_id: str = None
     ) -> AsyncIterator[str]:
         """生成聊天回复
 
         Args:
             messages (List[Dict[str, Any]]): 消息列表
             system (str, optional): 系统提示词
+            conversation_id (str, optional): Dify 会话 ID
+            user_id (str, optional): 用户标识
 
         Yields:
             str: API 响应的每个文本块
         """
         try:
+            logger.info(f"准备发送请求到 Dify - conversation_id: {conversation_id}, user_id: {user_id}")
+            
             # 构建最后一条用户消息
             last_message = messages[-1]["content"] if messages else ""
             
             # 准备请求数据
             data = {
-                "inputs": {},  # Dify的inputs参数，默认为空
+                "inputs": {},
                 "query": last_message,
                 "response_mode": "streaming",
-                "user": "default_user",  # 可以根据需要设置用户标识
+                "user": user_id,
+                "conversation_id": conversation_id
             }
 
-            # 如果有system prompt，添加到inputs中
-            if system:
-                data["inputs"]["system"] = system
+            # if system:
+            #     data["inputs"]["system"] = system
+
+            logger.info(f"Dify 请求数据: {data}")
 
             async with aiohttp.ClientSession() as session:
                 async with session.post(
@@ -68,6 +78,7 @@ class AsyncLLM(StatelessLLMInterface):
                 ) as response:
                     if response.status != 200:
                         error_text = await response.text()
+                        logger.error(f"Dify API返回错误: {response.status} - {error_text}")
                         raise Exception(f"Dify API返回错误: {response.status} - {error_text}")
 
                     # 处理SSE流式响应
@@ -78,6 +89,12 @@ class AsyncLLM(StatelessLLMInterface):
                         if line.startswith("data: "):
                             try:
                                 event_data = json.loads(line[6:])  # 去掉"data: "前缀
+                                
+                                # 如果是第一条消息且没有 conversation_id，获取并返回
+                                if not conversation_id and event_data.get("conversation_id"):
+                                    new_conversation_id = event_data["conversation_id"]
+                                    # logger.info(f"从 Dify SSE 响应获取到新的 conversation_id: {new_conversation_id}")
+                                    yield f"__conversation_id:{new_conversation_id}"
                                 
                                 if event_data.get("event") == "error":
                                     error_msg = event_data.get("message", "未知错误")

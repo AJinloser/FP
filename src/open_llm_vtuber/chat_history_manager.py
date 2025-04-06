@@ -3,7 +3,7 @@ import re
 import json
 import uuid
 from datetime import datetime
-from typing import Literal, List, TypedDict, Optional
+from typing import Literal, List, TypedDict, Optional, Dict
 from loguru import logger
 
 
@@ -14,6 +14,13 @@ class HistoryMessage(TypedDict):
     # Optional display information for the message
     name: Optional[str]
     avatar: Optional[str]
+
+
+class HistoryMetadata(TypedDict):
+    role: Literal["metadata"]
+    timestamp: str
+    conversation_id: Optional[str]  # Dify 会话 ID
+    user_id: Optional[str]  # 用户标识
 
 
 def _is_safe_filename(filename: str) -> bool:
@@ -60,24 +67,23 @@ def _get_safe_history_path(conf_uid: str, history_uid: str) -> str:
     return full_path
 
 
-def create_new_history(conf_uid: str) -> str:
+def create_new_history(conf_uid: str, user_id: str = None) -> str:
     """Create a new history file with a unique ID and return the history_uid"""
     if not conf_uid:
         logger.warning("No conf_uid provided")
         return ""
 
-    # Use uuid.uuid4().hex to generate a UUID without hyphens
-    # New format: UUID_YYYY-MM-DD_HH-MM-SS
     history_uid = f"{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}_{uuid.uuid4().hex}"
-    conf_dir = _ensure_conf_dir(conf_uid)  # conf_uid is sanitized here
+    conf_dir = _ensure_conf_dir(conf_uid)
 
-    # Create history file with empty metadata
     try:
         filepath = os.path.join(conf_dir, f"{history_uid}.json")
         initial_data = [
             {
                 "role": "metadata",
                 "timestamp": datetime.now().isoformat(timespec="seconds"),
+                "conversation_id": None,  # 初始为 None，等待第一次对话时设置
+                "user_id": user_id or f"user_{uuid.uuid4().hex[:8]}"  # 如果没有提供用户ID，生成一个
             }
         ]
         with open(filepath, "w", encoding="utf-8") as f:
@@ -86,7 +92,7 @@ def create_new_history(conf_uid: str) -> str:
         logger.error(f"Failed to create new history file: {e}")
         return ""
 
-    logger.debug(f"Created new history file with empty metadata: {filepath}")
+    logger.debug(f"Created new history file with metadata: {filepath}")
     return history_uid
 
 
@@ -185,24 +191,27 @@ def update_metadate(conf_uid: str, history_uid: str, metadata: dict) -> bool:
             history_data = json.load(f)
 
         if history_data and history_data[0]["role"] == "metadata":
-            # Update existing metadata while preserving other fields
+            # 更新现有元数据，保留其他字段
+            if "conversation_id" in metadata:
+                logger.info(f"更新对话历史元数据 - 新的 conversation_id: {metadata['conversation_id']}")
             history_data[0].update(metadata)
         else:
-            # Create new metadata with timestamp if none exists
+            # 如果没有元数据，创建新的
             new_metadata = {
                 "role": "metadata",
                 "timestamp": datetime.now().isoformat(timespec="seconds"),
             }
-            new_metadata.update(metadata)  # Add new fields
+            new_metadata.update(metadata)
             history_data.insert(0, new_metadata)
+            logger.info(f"创建新的对话历史元数据: {new_metadata}")
 
         with open(filepath, "w", encoding="utf-8") as f:
             json.dump(history_data, f, ensure_ascii=False, indent=2)
 
-        logger.debug(f"Updated metadata for history {history_uid}")
+        logger.debug(f"更新对话历史 {history_uid} 的元数据成功")
         return True
     except Exception as e:
-        logger.error(f"Failed to set metadata: {e}")
+        logger.error(f"更新元数据失败: {e}")
     return False
 
 
