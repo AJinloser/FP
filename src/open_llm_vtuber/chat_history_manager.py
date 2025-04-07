@@ -192,8 +192,8 @@ def update_metadate(conf_uid: str, history_uid: str, metadata: dict) -> bool:
 
         if history_data and history_data[0]["role"] == "metadata":
             # 更新现有元数据，保留其他字段
-            if "conversation_id" in metadata:
-                logger.info(f"更新对话历史元数据 - 新的 conversation_id: {metadata['conversation_id']}")
+            # if "conversation_id" in metadata:
+            #     logger.info(f"更新对话历史元数据 - 新的 conversation_id: {metadata['conversation_id']}")
             history_data[0].update(metadata)
         else:
             # 如果没有元数据，创建新的
