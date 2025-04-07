@@ -100,9 +100,7 @@ class TTSEngine(TTSInterface):
         ssml_text = f"""
         <speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="en-US">
             <voice name="{self.speech_config.speech_synthesis_voice_name}">
-                <prosody pitch="{self.pitch}%" rate="{self.rate}">
                     {text}
-                </prosody>
             </voice>
         </speak>
         """
