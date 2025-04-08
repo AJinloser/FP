@@ -78,6 +78,13 @@ class WebSocketServer:
             name="avatars",
         )
 
+        # 添加 logo 文件夹挂载
+        self.app.mount(
+            "/logo",
+            StaticFiles(directory="logo"),
+            name="logo",
+        )
+
         # Mount web tool directory separately from frontend
         self.app.mount(
             "/web-tool",

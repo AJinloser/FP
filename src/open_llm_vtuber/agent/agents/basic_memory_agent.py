@@ -109,7 +109,7 @@ class BasicMemoryAgent(AgentInterface):
         """设置会话信息"""
         if conversation_id:
             self._conversation_id = conversation_id
-            logger.info(f"设置新的 conversation_id: {conversation_id}")
+            # logger.info(f"设置新的 conversation_id: {conversation_id}")
             # 如果有 conf_uid 和 history_uid，更新元数据
             if self._conf_uid and self._history_uid:
                 update_metadate(self._conf_uid, self._history_uid, {
@@ -328,7 +328,7 @@ class BasicMemoryAgent(AgentInterface):
                 # 检查是否是会话ID更新的特殊标记
                 if token.startswith("__conversation_id:"):
                     new_conversation_id = token.split(":", 1)[1]
-                    logger.info(f"收到新的 conversation_id: {new_conversation_id}")
+                    # logger.info(f"收到新的 conversation_id: {new_conversation_id}")
                     # 更新会话ID并保存到元数据
                     self.set_conversation_info(conversation_id=new_conversation_id)
                     continue
