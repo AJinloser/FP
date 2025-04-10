@@ -82,7 +82,7 @@ def tts_filter(
 
 def remove_special_characters(text: str) -> str:
     """
-    Filter text to remove all non-letter, non-number, and non-punctuation characters.
+    Filter text to only keep Chinese characters, English letters, numbers and spaces.
 
     Args:
         text (str): The text to filter.
@@ -94,11 +94,13 @@ def remove_special_characters(text: str) -> str:
 
     def is_valid_char(char: str) -> bool:
         category = unicodedata.category(char)
+        # Lo: 'Letter, other' (包含中文字符)
+        # Ll: 'Letter, lowercase'
+        # Lu: 'Letter, uppercase'
+        # Nd: 'Number, decimal digit'
         return (
-            category.startswith("L")
-            or category.startswith("N")
-            or category.startswith("P")
-            or char.isspace()
+            category in {'Lo', 'Ll', 'Lu', 'Nd'}  # 只允许中文字符、英文字母和数字
+            or char.isspace()  # 保留空格
         )
 
     filtered_text = "".join(char for char in normalized_text if is_valid_char(char))
