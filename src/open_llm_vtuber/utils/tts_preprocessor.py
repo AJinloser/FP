@@ -82,7 +82,8 @@ def tts_filter(
 
 def remove_special_characters(text: str) -> str:
     """
-    Filter text to only keep Chinese characters, English letters, numbers and spaces.
+    Filter text to keep Chinese characters, English letters, numbers, spaces,
+    and basic mathematical symbols, while handling markdown and LaTeX formatting.
 
     Args:
         text (str): The text to filter.
@@ -90,20 +91,57 @@ def remove_special_characters(text: str) -> str:
     Returns:
         str: The filtered text.
     """
+    # 首先处理 LaTeX 数学公式
+    text = re.sub(r'\\text{([^}]*)}', r'\1', text)  # 移除 \text{} 命令但保留内容
+    text = re.sub(r'\\\[|\\\]', '', text)  # 移除 \[ \] 数学环境标记
+    text = re.sub(r'\$\$.*?\$\$', '', text)  # 移除 $$ 数学环境
+    text = re.sub(r'\$.*?\$', '', text)  # 移除 $ 数学环境
+    text = re.sub(r'\\[a-zA-Z]+(?:\{[^}]*\})?', '', text)  # 移除其他 LaTeX 命令
+
+    # 处理 markdown 格式
+    text = re.sub(r'\*\*([^*]+)\*\*', r'\1', text)  # 移除加粗标记但保留内容
+    text = re.sub(r'\*([^*]+)\*', r'\1', text)      # 移除斜体标记但保留内容
+    text = re.sub(r'`([^`]+)`', r'\1', text)        # 移除代码标记但保留内容
+    text = re.sub(r'^#+\s+', '', text, flags=re.MULTILINE)  # 移除标题标记
+    text = re.sub(r'\[([^\]]+)\]\([^)]+\)', r'\1', text)   # 处理链接，保留显示文本
+
     normalized_text = unicodedata.normalize("NFKC", text)
 
     def is_valid_char(char: str) -> bool:
         category = unicodedata.category(char)
-        # Lo: 'Letter, other' (包含中文字符)
-        # Ll: 'Letter, lowercase'
-        # Lu: 'Letter, uppercase'
-        # Nd: 'Number, decimal digit'
+        
+        # 定义允许的数学和特殊符号
+        allowed_symbols = {
+            '+',   # 加号
+            '-',   # 减号
+            '×',   # 乘号
+            '÷',   # 除号
+            '/',   # 斜杠（除号）
+            '=',   # 等号
+            '%',   # 百分号
+            '.',   # 小数点
+            '。',  # 句号（中文）
+            '，',  # 逗号（中文）
+            ',',   # 逗号
+            '：',  # 冒号（中文）
+            ':',   # 冒号
+            '！',  # 感叹号（中文）
+            '!',   # 感叹号
+            '？',  # 问号（中文）
+            '?',   # 问号
+        }
+
         return (
-            category in {'Lo', 'Ll', 'Lu', 'Nd'}  # 只允许中文字符、英文字母和数字
+            category in {'Lo', 'Ll', 'Lu', 'Nd'}  # 允许中文字符、英文字母和数字
             or char.isspace()  # 保留空格
+            or char in allowed_symbols  # 允许特定的数学符号和标点
         )
 
     filtered_text = "".join(char for char in normalized_text if is_valid_char(char))
+    
+    # 清理多余的空白字符
+    filtered_text = re.sub(r'\s+', ' ', filtered_text).strip()
+    
     return filtered_text
 
 
