@@ -16,30 +16,23 @@ def sentence_divider(
 ):
     """
     Decorator that transforms token stream into sentences with tags
-
-    Args:
-        faster_first_response: bool - Whether to enable faster first response
-        segment_method: str - Method for sentence segmentation
-        valid_tags: List[str] - List of valid tags to process
     """
-
     def decorator(
         func: Callable[..., AsyncIterator[str]],
     ) -> Callable[..., AsyncIterator[SentenceWithTags]]:
         @wraps(func)
         async def wrapper(*args, **kwargs) -> AsyncIterator[SentenceWithTags]:
-            divider = SentenceDivider(
-                faster_first_response=faster_first_response,
-                segment_method=segment_method,
-                valid_tags=valid_tags or [],
-            )
+            # 直接将输入流转换为 SentenceWithTags，不进行分割
             token_stream = func(*args, **kwargs)
-            async for sentence in divider.process_stream(token_stream):
-                yield sentence
-                logger.debug(f"sentence_divider: {sentence}")
+            async for token in token_stream:
+                # 每个token作为一个完整的句子传递，保持原始格式
+                yield SentenceWithTags(
+                    text=token,
+                    tags=[],  # 空标签列表，因为我们不需要处理标签
+                )
+                logger.debug(f"sentence_divider: {token}")
 
         return wrapper
-
     return decorator
 
 
@@ -76,7 +69,6 @@ def display_processor():
     """
     Decorator that processes text for display.
     """
-
     def decorator(
         func: Callable[..., AsyncIterator[Tuple[SentenceWithTags, Actions]]],
     ) -> Callable[..., AsyncIterator[Tuple[SentenceWithTags, DisplayText, Actions]]]:
@@ -87,20 +79,11 @@ def display_processor():
             stream = func(*args, **kwargs)
 
             async for sentence, actions in stream:
-                text = sentence.text
-                # Handle think tag states
-                for tag in sentence.tags:
-                    if tag.name == "think":
-                        if tag.state == TagState.START:
-                            text = "("
-                        elif tag.state == TagState.END:
-                            text = ")"
-
-                display = DisplayText(text=text)  # Simplified DisplayText creation
+                # 直接使用原始文本，不做任何修改
+                display = DisplayText(text=sentence.text)
                 yield sentence, display, actions
 
         return wrapper
-
     return decorator
 
 

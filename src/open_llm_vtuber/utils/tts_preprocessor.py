@@ -84,15 +84,13 @@ def remove_special_characters(text: str) -> str:
     """
     Filter text to keep Chinese characters, English letters, numbers, spaces,
     and basic mathematical symbols, while handling markdown and LaTeX formatting.
-
-    Args:
-        text (str): The text to filter.
-
-    Returns:
-        str: The filtered text.
+    Skip table content to prevent TTS errors.
     """
-    # 首先处理 LaTeX 数学公式
-    text = re.sub(r'\\text{([^}]*)}', r'\1', text)  # 移除 \text{} 命令但保留内容
+    # 首先处理表格分隔符中的连续减号
+    text = re.sub(r'\|[\s-]*\|', '||', text)  # 替换表格分隔行
+    
+    # 其他文本处理保持不变
+    text = re.sub(r'\\text{([^}]*)}', r'\1', text)
     text = re.sub(r'\\\[|\\\]', '', text)  # 移除 \[ \] 数学环境标记
     text = re.sub(r'\$\$.*?\$\$', '', text)  # 移除 $$ 数学环境
     text = re.sub(r'\$.*?\$', '', text)  # 移除 $ 数学环境
@@ -113,7 +111,7 @@ def remove_special_characters(text: str) -> str:
         # 定义允许的数学和特殊符号
         allowed_symbols = {
             '+',   # 加号
-            '-',   # 减号
+            '-',   # 减号（数学运算符）
             '×',   # 乘号
             '÷',   # 除号
             '/',   # 斜杠（除号）
@@ -131,6 +129,10 @@ def remove_special_characters(text: str) -> str:
             '?',   # 问号
         }
 
+        # 如果是连续的减号，则不保留
+        if char == '-' and normalized_text.find('---') != -1:
+            return False
+
         return (
             category in {'Lo', 'Ll', 'Lu', 'Nd'}  # 允许中文字符、英文字母和数字
             or char.isspace()  # 保留空格
@@ -141,6 +143,10 @@ def remove_special_characters(text: str) -> str:
     
     # 清理多余的空白字符
     filtered_text = re.sub(r'\s+', ' ', filtered_text).strip()
+    
+    # 添加日志以便调试
+    logger.debug(f"Original text: {text}")
+    logger.debug(f"Filtered text for TTS: {filtered_text}")
     
     return filtered_text
 
