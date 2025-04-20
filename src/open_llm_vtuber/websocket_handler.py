@@ -174,7 +174,7 @@ class WebSocketHandler:
         await self.send_group_update(websocket, client_uid)
 
         # Start microphone
-        await websocket.send_text(json.dumps({"type": "control", "text": "start-mic"}))
+        # await websocket.send_text(json.dumps({"type": "control", "text": "start-mic"}))
 
     async def _init_service_context(self) -> ServiceContext:
         """Initialize service context for a new session by cloning the default context"""
