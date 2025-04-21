@@ -141,48 +141,89 @@ class AsyncLLM(StatelessLLMInterface):
 
     def _split_complete_sentences(self, text: str) -> List[str]:
         """
-        将文本分割成完整的句子。
-        返回一个列表：[完整的句子, 剩余的不完整内容]
+        按顺序划分语句，处理普通文本、代码块和表格。
+        返回一个列表：[完整的句子/代码块/表格, 剩余的不完整内容]
         """
-        # 检查是否在代码块内
-        if '```' in text:
-            # 如果发现代码块开始标记
-            if text.count('```') == 1:
-                # 只有开始标记，继续等待结束标记
-                return []
-            else:
-                # 找到完整的代码块
-                start_idx = text.find('```')
-                end_idx = text.find('```', start_idx + 3)
-                if end_idx != -1:
-                    # 返回完整的代码块（包括结束标记）
-                    return [text[:end_idx + 3], text[end_idx + 3:]]
-                return []
-
-        # 如果当前文本以"```"开头，等待更多内容
-        if text.startswith('```'):
+        if not text.strip():
             return []
 
-        # 检查是否在普通文本中
-        # 检查常见的句子结束符
-        sentence_endings = ['。', '！', '？', '…']  # 移除 '.', '!', '?' 避免代码中的符号被误判
+        # 查找第一个特殊标记（代码块或表格）的位置
+        code_start = text.find('```')
+        table_start = text.find('|')
+        
+        # 没有特殊标记，按普通文本处理
+        if code_start == -1 and table_start == -1:
+            return self._split_normal_text(text)
+        
+        # 确定第一个特殊标记的位置和类型
+        first_special = min(
+            (pos for pos in [code_start, table_start] if pos != -1), 
+            default=-1
+        )
+        
+        # 如果特殊标记前有普通文本，强制输出
+        if first_special > 0:
+            normal_text = text[:first_special]
+            # 在普通文本末尾添加换行符
+            if not normal_text.endswith('\n'):
+                normal_text += '\n'
+            return [normal_text, text[first_special:]]
+        
+        # 处理代码块
+        if first_special == code_start:
+            if text.count('```', code_start) < 2:
+                # 代码块未完成
+                return []
+            
+            end_idx = text.find('```', code_start + 3)
+            code_block = text[code_start:end_idx + 3]
+            remaining = text[end_idx + 3:]
+            
+            # 在代码块结束后添加换行符
+            if remaining and not remaining.startswith('\n'):
+                code_block += '\n'
+            
+            return [code_block, remaining]
+        
+        # 处理表格
+        if first_special == table_start:
+            lines = text[table_start:].split('\n')
+            table_lines = []
+            remaining_lines = []
+            in_table = False
+            
+            for i, line in enumerate(lines):
+                if line.strip().startswith('|'):
+                    if not in_table:
+                        in_table = True
+                    table_lines.append(line)
+                else:
+                    if in_table:
+                        # 表格结束
+                        remaining_lines = lines[i:]
+                        break
+                    remaining_lines.append(line)
+            
+            if table_lines:
+                table = '\n'.join(table_lines)
+                remaining = '\n'.join(remaining_lines)
+                return [table, remaining]
+            
+        return []
+
+    def _split_normal_text(self, text: str) -> List[str]:
+        """
+        处理普通文本的分句，只使用中文标点作为分割符
+        """
+        # 只使用中文句号、问号和感叹号作为分割符
+        sentence_endings = ['。', '？', '！']
+        
+        # 从后向前查找句子结束符
         for i in range(len(text)-1, -1, -1):
             if text[i] in sentence_endings:
-                # 确保这是真正的句子结束，而不是代码中的符号
-                if i + 1 < len(text) and text[i + 1] in ['\n', ' ', '']:
+                # 确保这是句子的真正结束
+                if i + 1 == len(text) or text[i + 1] in ['\n', ' ', '']:
                     return [text[:i+1], text[i+1:]]
-            
-        # 如果遇到换行符，且不是在代码块中
-        if '\n' in text and not any(code_marker in text for code_marker in ['```python', '```']):
-            lines = text.split('\n', 1)
-            if lines[0].strip():  # 确保不是空行
-                return [lines[0] + '\n', lines[1] if len(lines) > 1 else '']
         
-        # # 如果文本长度超过阈值且包含完整句子的标志（如逗号），进行分割
-        # if len(text) > 50 and ('，' in text or '；' in text):
-        #     for i in range(len(text)-1, -1, -1):
-        #         if text[i] in ['，', '；']:
-        #             return [text[:i+1], text[i+1:]]
-            
         # 如果没有找到完整句子，返回空列表
         return [] 
