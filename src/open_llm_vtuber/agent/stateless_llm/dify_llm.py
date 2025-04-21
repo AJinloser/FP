@@ -213,16 +213,28 @@ class AsyncLLM(StatelessLLMInterface):
 
     def _split_normal_text(self, text: str) -> List[str]:
         """
-        处理普通文本的分句，只使用中文标点作为分割符
+        处理普通文本的分句，使用中文标点和换行符作为分割符
         """
-        # 只使用中文句号、问号和感叹号作为分割符
+        # 只使用中文句号、问号、感叹号和换行符作为分割符
         sentence_endings = ['。', '？', '！']
         
         # 从后向前查找句子结束符
         for i in range(len(text)-1, -1, -1):
+            # 检查是否是标点符号结尾
             if text[i] in sentence_endings:
                 # 确保这是句子的真正结束
                 if i + 1 == len(text) or text[i + 1] in ['\n', ' ', '']:
+                    return [text[:i+1], text[i+1:]]
+            # 检查是否是换行符结尾
+            elif text[i] == '\n':
+                # 向前查找最近的标点符号
+                has_punctuation = False
+                for j in range(i-1, max(i-50, -1), -1):  # 向前最多查找50个字符
+                    if text[j] in sentence_endings:
+                        has_punctuation = True
+                        break
+                # 如果这段文本中没有标点符号，就用换行符作为分割点
+                if not has_punctuation:
                     return [text[:i+1], text[i+1:]]
         
         # 如果没有找到完整句子，返回空列表
