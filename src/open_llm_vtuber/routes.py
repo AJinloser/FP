@@ -2,6 +2,7 @@ import json
 from uuid import uuid4
 import numpy as np
 from datetime import datetime
+import hashlib
 from fastapi import APIRouter, WebSocket, UploadFile, File, Response
 from starlette.websockets import WebSocketDisconnect
 from loguru import logger
@@ -30,14 +31,24 @@ def init_client_ws_route(default_context_cache: ServiceContext) -> APIRouter:
         
         # 从请求头中获取设备信息
         headers = websocket.headers
+        # logger.info(f"Headers: {headers}")
         user_agent = headers.get("user-agent", "")
+        # logger.info(f"User-Agent: {user_agent}")
         client_ip = headers.get("x-real-ip") or headers.get("x-forwarded-for") or websocket.client.host
+        # logger.info(f"Client IP: {client_ip}")
         
         # 生成设备唯一标识
         device_fingerprint = f"{user_agent}_{client_ip}"
-        # 使用 hash 生成稳定的 user_id
-        user_id = f"user_{hash(device_fingerprint) & 0xFFFFFFFF:08x}"
+        # logger.info(f"Device Fingerprint: {device_fingerprint}")
         
+        # 使用 SHA-256 生成稳定的哈希值
+        hash_object = hashlib.sha256(device_fingerprint.encode())
+        hash_hex = hash_object.hexdigest()
+        
+        # 使用哈希值的前8位作为user_id
+        user_id = f"user_{hash_hex[:8]}"
+        
+        # logger.info(f"User ID: {user_id}")
         client_uid = str(uuid4())
         
         try:
