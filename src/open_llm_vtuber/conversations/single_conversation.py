@@ -66,10 +66,10 @@ async def process_single_conversation(
                 from_name=context.character_config.human_name,
             )
 
-            # Store user message
+            # Store user message - 使用 user_id 而不是 conf_uid
             if context.history_uid:
                 store_message(
-                    conf_uid=context.character_config.conf_uid,
+                    user_id=context.agent_engine.get_conversation_info()["user_id"],
                     history_uid=context.history_uid,
                     role="human",
                     content=input_text,
@@ -98,9 +98,10 @@ async def process_single_conversation(
                 client_uid=client_uid,
             )
 
+            # Store AI response - 使用 user_id 而不是 conf_uid
             if context.history_uid and full_response:
                 store_message(
-                    conf_uid=context.character_config.conf_uid,
+                    user_id=context.agent_engine.get_conversation_info()["user_id"],
                     history_uid=context.history_uid,
                     role="ai",
                     content=full_response,

@@ -102,8 +102,9 @@ async def handle_individual_interrupt(
             logger.error(f"Error handling interrupt: {e}")
 
         if context.history_uid:
+            user_id = context.agent_engine.get_conversation_info()["user_id"]
             store_message(
-                conf_uid=context.character_config.conf_uid,
+                user_id=user_id,
                 history_uid=context.history_uid,
                 role="ai",
                 content=heard_response,
@@ -111,7 +112,7 @@ async def handle_individual_interrupt(
                 avatar=context.character_config.avatar,
             )
             store_message(
-                conf_uid=context.character_config.conf_uid,
+                user_id=user_id,
                 history_uid=context.history_uid,
                 role="system",
                 content="[Interrupted by user]",
@@ -162,8 +163,9 @@ async def handle_group_interrupt(
                 try:
                     member_ctx = client_contexts[member_uid]
                     member_ctx.agent_engine.handle_interrupt(heard_response)
+                    user_id = member_ctx.agent_engine.get_conversation_info()["user_id"]
                     store_message(
-                        conf_uid=member_ctx.character_config.conf_uid,
+                        user_id=user_id,
                         history_uid=member_ctx.history_uid,
                         role="ai",
                         content=heard_response,
@@ -171,7 +173,7 @@ async def handle_group_interrupt(
                         avatar=context.character_config.avatar,
                     )
                     store_message(
-                        conf_uid=member_ctx.character_config.conf_uid,
+                        user_id=user_id,
                         history_uid=member_ctx.history_uid,
                         role="system",
                         content="[Interrupted by user]",

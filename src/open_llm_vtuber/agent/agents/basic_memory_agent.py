@@ -159,28 +159,20 @@ class BasicMemoryAgent(AgentInterface):
 
         self._memory.append(message_data)
 
-    def set_memory_from_history(self, conf_uid: str, history_uid: str) -> None:
+    def set_memory_from_history(self, user_id: str, history_uid: str) -> None:
         """从历史记录加载对话记录和会话信息"""
-        self._conf_uid = conf_uid
+        self._user_id = user_id
         self._history_uid = history_uid
         
         # 获取元数据中的会话信息
-        metadata = get_metadata(conf_uid, history_uid)
+        metadata = get_metadata(user_id, history_uid)
         logger.info(f"加载历史记录元数据: {metadata}")
         
         if metadata:
             self._conversation_id = metadata.get("conversation_id")
-            self._user_id = metadata.get("user_id")
-            if not self._user_id:
-                # 如果没有用户ID，生成一个
-                self._user_id = f"user_{uuid.uuid4().hex[:8]}"
-                logger.info(f"生成新的 user_id: {self._user_id}")
-                update_metadate(conf_uid, history_uid, {"user_id": self._user_id})
-        
-        logger.info(f"当前会话信息 - conversation_id: {self._conversation_id}, user_id: {self._user_id}")
         
         # 加载对话历史
-        messages = get_history(conf_uid, history_uid)
+        messages = get_history(user_id, history_uid)
         self._memory = []
         self._memory.append({
             "role": "system",

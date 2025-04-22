@@ -66,6 +66,7 @@ class WebSocketHandler:
         """Initialize the WebSocket handler with default context"""
         self.client_connections: Dict[str, WebSocket] = {}
         self.client_contexts: Dict[str, ServiceContext] = {}
+        self.client_user_ids: Dict[str, str] = {}  # 新增：存储每个客户端的 user_id
         self.chat_group_manager = ChatGroupManager()
         self.current_conversation_tasks: Dict[str, Optional[asyncio.Task]] = {}
         self.default_context_cache = default_context_cache
@@ -101,7 +102,7 @@ class WebSocketHandler:
         }
 
     async def handle_new_connection(
-        self, websocket: WebSocket, client_uid: str
+        self, websocket: WebSocket, client_uid: str, user_id: str
     ) -> None:
         """
         Handle new WebSocket connection setup
@@ -109,12 +110,16 @@ class WebSocketHandler:
         Args:
             websocket: The WebSocket connection
             client_uid: Unique identifier for the client
+            user_id: User ID for the client
 
         Raises:
             Exception: If initialization fails
         """
         try:
             session_service_context = await self._init_service_context()
+
+            # 存储 user_id
+            self.client_user_ids[client_uid] = user_id
 
             await self._store_client_data(
                 websocket, client_uid, session_service_context
@@ -124,7 +129,7 @@ class WebSocketHandler:
                 websocket, client_uid, session_service_context
             )
 
-            logger.info(f"Connection established for client {client_uid}")
+            logger.info(f"Connection established for client {client_uid} with user_id {user_id}")
 
         except Exception as e:
             logger.error(
@@ -369,9 +374,9 @@ class WebSocketHandler:
     async def _handle_history_list_request(
         self, websocket: WebSocket, client_uid: str, data: WSMessage
     ) -> None:
-        """Handle request for chat history list"""
-        context = self.client_contexts[client_uid]
-        histories = get_history_list(context.character_config.conf_uid)
+        """处理历史记录列表请求"""
+        user_id = self.client_user_ids[client_uid]
+        histories = get_history_list(user_id)
         await websocket.send_text(
             json.dumps({"type": "history-list", "histories": histories})
         )
@@ -407,22 +412,21 @@ class WebSocketHandler:
     async def _handle_create_history(
         self, websocket: WebSocket, client_uid: str, data: WSMessage
     ) -> None:
-        """Handle creation of new chat history"""
-        context = self.client_contexts[client_uid]
-        history_uid = create_new_history(context.character_config.conf_uid)
+        """处理创建新历史记录的请求"""
+        user_id = self.client_user_ids[client_uid]
+        history_uid = create_new_history(user_id)
         if history_uid:
+            context = self.client_contexts[client_uid]
             context.history_uid = history_uid
             context.agent_engine.set_memory_from_history(
-                conf_uid=context.character_config.conf_uid,
+                user_id=user_id,
                 history_uid=history_uid,
             )
             await websocket.send_text(
-                json.dumps(
-                    {
-                        "type": "new-history-created",
-                        "history_uid": history_uid,
-                    }
-                )
+                json.dumps({
+                    "type": "new-history-created",
+                    "history_uid": history_uid,
+                })
             )
 
     async def _handle_delete_history(

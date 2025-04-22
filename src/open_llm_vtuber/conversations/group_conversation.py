@@ -83,10 +83,12 @@ async def process_group_conversation(
             initiator_client_uid=initiator_client_uid,
         )
 
+        # 为每个组成员存储人类消息，使用各自的 user_id
         for member_uid in group_members:
             member_context = client_contexts[member_uid]
+            user_id = member_context.agent_engine.get_conversation_info()["user_id"]
             store_message(
-                conf_uid=member_context.character_config.conf_uid,
+                user_id=user_id,
                 history_uid=member_context.history_uid,
                 role="human",
                 content=input_text,
@@ -264,10 +266,12 @@ async def handle_group_member_turn(
         state.conversation_history.append(ai_message)
         logger.info(f"Appended complete response: {ai_message}")
 
+        # 为每个组成员存储消息，使用各自的 user_id
         for member_uid in group_members:
             member_context = client_contexts[member_uid]
+            user_id = member_context.agent_engine.get_conversation_info()["user_id"]
             store_message(
-                conf_uid=member_context.character_config.conf_uid,
+                user_id=user_id,
                 history_uid=member_context.history_uid,
                 role="ai",
                 content=full_response,

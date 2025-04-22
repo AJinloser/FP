@@ -27,10 +27,22 @@ def init_client_ws_route(default_context_cache: ServiceContext) -> APIRouter:
     async def websocket_endpoint(websocket: WebSocket):
         """WebSocket endpoint for client connections"""
         await websocket.accept()
+        
+        # 从请求头中获取设备信息
+        headers = websocket.headers
+        user_agent = headers.get("user-agent", "")
+        client_ip = headers.get("x-real-ip") or headers.get("x-forwarded-for") or websocket.client.host
+        
+        # 生成设备唯一标识
+        device_fingerprint = f"{user_agent}_{client_ip}"
+        # 使用 hash 生成稳定的 user_id
+        user_id = f"user_{hash(device_fingerprint) & 0xFFFFFFFF:08x}"
+        
         client_uid = str(uuid4())
-
+        
         try:
-            await ws_handler.handle_new_connection(websocket, client_uid)
+            # 将 user_id 传入 handle_new_connection
+            await ws_handler.handle_new_connection(websocket, client_uid, user_id)
             await ws_handler.handle_websocket_communication(websocket, client_uid)
         except WebSocketDisconnect:
             await ws_handler.handle_disconnect(client_uid)
