@@ -21,12 +21,25 @@ def create_batch_input(
     input_text: str,
     images: Optional[List[Dict[str, Any]]],
     from_name: str,
+    selection: Optional[str] = None,
 ) -> BatchInput:
-    """Create batch input for agent processing"""
+    """Create batch input for agent processing
+    
+    Args:
+        input_text: User input text
+        images: Optional list of image data
+        from_name: Name of the sender
+        selection: Optional selection parameter
+    """
+    text_data = TextData(
+        source=TextSource.INPUT, 
+        content=input_text, 
+        from_name=from_name,
+        selection=selection
+    )
+    
     return BatchInput(
-        texts=[
-            TextData(source=TextSource.INPUT, content=input_text, from_name=from_name)
-        ],
+        texts=[text_data],
         images=[
             ImageData(
                 source=ImageSource(img["source"]),

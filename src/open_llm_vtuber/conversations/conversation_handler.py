@@ -47,6 +47,7 @@ async def handle_conversation_trigger(
 
     images = data.get("images")
     session_emoji = np.random.choice(EMOJI_LIST)
+    selection = data.get("selection")
 
     group = chat_group_manager.get_client_group(client_uid)
     if group and len(group.members) > 1:
@@ -66,6 +67,7 @@ async def handle_conversation_trigger(
                     group_members=group.members,
                     initiator_client_uid=client_uid,
                     user_input=user_input,
+                    selection=selection,
                     images=images,
                     session_emoji=session_emoji,
                 )
@@ -78,6 +80,7 @@ async def handle_conversation_trigger(
                 websocket_send=websocket.send_text,
                 client_uid=client_uid,
                 user_input=user_input,
+                selection=selection,
                 images=images,
                 session_emoji=session_emoji,
             )

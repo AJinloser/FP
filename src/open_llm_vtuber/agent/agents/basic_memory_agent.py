@@ -304,7 +304,11 @@ class BasicMemoryAgent(AgentInterface):
             """
 
             messages = self._to_messages(input_data)
-
+            
+            # 获取 selection 参数
+            selection = input_data.texts[0].selection if input_data.texts else None
+            logger.info(f"Selection parameter: {selection}")
+            
             logger.info(f"发送对话请求 - conversation_id: {self._conversation_id}, user_id: {self._user_id}")
             
             # 获取token流，传入会话信息
@@ -312,7 +316,8 @@ class BasicMemoryAgent(AgentInterface):
                 messages, 
                 self._system,
                 conversation_id=self._conversation_id,
-                user_id=self._user_id
+                user_id=self._user_id,
+                selection=selection
             )
             complete_response = ""
 

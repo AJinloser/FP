@@ -24,6 +24,7 @@ async def process_single_conversation(
     websocket_send: WebSocketSend,
     client_uid: str,
     user_input: Union[str, np.ndarray],
+    selection: str = None,
     images: Optional[List[Dict[str, Any]]] = None,
     session_emoji: str = np.random.choice(EMOJI_LIST),
 ) -> str:
@@ -34,6 +35,7 @@ async def process_single_conversation(
         websocket_send: WebSocket send function
         client_uid: Client unique identifier
         user_input: Text or audio input from user
+        selection: Selection for the conversation
         images: Optional list of image data
         session_emoji: Emoji identifier for the conversation
 
@@ -64,6 +66,7 @@ async def process_single_conversation(
                 input_text=input_text,
                 images=images,
                 from_name=context.character_config.human_name,
+                selection=selection
             )
 
             # Store user message - 使用 user_id 而不是 conf_uid

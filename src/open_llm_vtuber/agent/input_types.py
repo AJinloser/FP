@@ -60,11 +60,13 @@ class TextData:
         source: Source of the text
         content: str - The text content
         from_name: Optional[str] - Name of the sender/character
+        selection: Optional[str] - Selection parameter
     """
 
     source: TextSource
     content: str
     from_name: Optional[str] = None
+    selection: Optional[str] = None
 
 
 class BaseInput:

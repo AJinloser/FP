@@ -23,6 +23,7 @@ class AsyncLLM(StatelessLLMInterface):
         """
         self.base_url = base_url.rstrip("/")
         self.chat_endpoint = f"{self.base_url}/v1/chat-messages"
+        self.parameters_endpoint = f"{self.base_url}/v1/parameters"  # 新增参数端点
         self.headers = {
             "Authorization": f"Bearer {llm_api_key}",
             "Content-Type": "application/json",
@@ -34,12 +35,39 @@ class AsyncLLM(StatelessLLMInterface):
         
         logger.info(f"已初始化 Dify LLM，API端点：{self.chat_endpoint}")
 
+    async def get_parameters(self) -> Dict[str, Any]:
+        """获取 Dify 应用参数"""
+        try:
+            async with aiohttp.ClientSession() as session:
+                async with session.get(
+                    self.parameters_endpoint,
+                    headers=self.headers
+                ) as response:
+                    if response.status != 200:
+                        raise Exception(f"获取参数失败: {response.status}")
+                    data = await response.json()
+                    # 提取 select options
+                    select_options = []
+                    for input_form in data.get("user_input_form", []):
+                        # 检查是否有 select 字段
+                        if "select" in input_form:
+                            select_data = input_form["select"]
+                            if "options" in select_data:
+                                select_options = select_data["options"]
+                                logger.info(f"获取到选项列表: {select_options}")
+                                break
+                    return {"select_options": select_options}
+        except Exception as e:
+            logger.error(f"获取 Dify 参数失败: {e}")
+            return {"select_options": []}
+
     async def chat_completion(
         self, 
         messages: List[Dict[str, Any]], 
         system: str = None,
         conversation_id: str = "",
-        user_id: str = None
+        user_id: str = None,
+        selection: str = None  # 新增参数
     ) -> AsyncIterator[str]:
         """生成聊天回复
 
@@ -48,6 +76,7 @@ class AsyncLLM(StatelessLLMInterface):
             system (str, optional): 系统提示词
             conversation_id (str, optional): Dify 会话 ID
             user_id (str, optional): 用户标识
+            selection (str, optional): 选择参数
 
         Yields:
             str: API 响应的每个文本块
@@ -66,6 +95,10 @@ class AsyncLLM(StatelessLLMInterface):
                 "user": user_id,
                 "conversation_id": conversation_id
             }
+
+            # 添加 selection 参数
+            if selection:
+                data["inputs"]["selection"] = selection
 
             # if system:
             #     data["inputs"]["system"] = system

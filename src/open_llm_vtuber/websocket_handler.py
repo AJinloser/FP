@@ -129,6 +129,15 @@ class WebSocketHandler:
                 websocket, client_uid, session_service_context
             )
 
+            # 获取并发送选项参数
+            options = await self.default_context_cache.agent_engine._llm.get_parameters()
+            await websocket.send_text(
+                json.dumps({
+                    "type": "select-options",
+                    "options": options["select_options"]
+                })
+            )
+
             logger.info(f"Connection established for client {client_uid} with user_id {user_id}")
 
         except Exception as e:
