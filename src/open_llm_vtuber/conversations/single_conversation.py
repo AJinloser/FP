@@ -47,7 +47,8 @@ async def process_single_conversation(
 
     try:
         # Send initial signals
-        await send_conversation_start_signals(websocket_send)
+        if not isinstance(user_input, np.ndarray):
+            await send_conversation_start_signals(websocket_send)
         logger.info(f"New Conversation Chain {session_emoji} started!")
 
         # Process user input
