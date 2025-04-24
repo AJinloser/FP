@@ -246,29 +246,43 @@ class AsyncLLM(StatelessLLMInterface):
 
     def _split_normal_text(self, text: str) -> List[str]:
         """
-        处理普通文本的分句，使用中文标点和换行符作为分割符
+        处理普通文本的分句，使用分层的分隔符系统
+        返回一个列表：[完整的句子, 剩余的不完整内容]
         """
-        # 只使用中文句号、问号、感叹号和换行符作为分割符
-        sentence_endings = ['。', '？', '！']
+        # 定义分隔符优先级
+        primary_endings = ['。', '？', '！', '；']  # 主要分隔符
+        secondary_endings = ['，', '、', '）', '】', '》', '"', "'", '：']  # 次要分隔符
         
-        # 从后向前查找句子结束符
-        for i in range(len(text)-1, -1, -1):
-            # 检查是否是标点符号结尾
-            if text[i] in sentence_endings:
-                # 确保这是句子的真正结束
-                if i + 1 == len(text) or text[i + 1] in ['\n', ' ', '']:
+        # 从前向后查找第一个主要分隔符
+        for i in range(len(text)):
+            # 检查是否是主要分隔符
+            if text[i] in primary_endings:
+                if i > 0:
                     return [text[:i+1], text[i+1:]]
-            # 检查是否是换行符结尾
+            # 如果遇到换行符，且之前的文本中没有任何主要分隔符
             elif text[i] == '\n':
-                # 向前查找最近的标点符号
-                has_punctuation = False
-                for j in range(i-1, max(i-50, -1), -1):  # 向前最多查找50个字符
-                    if text[j] in sentence_endings:
-                        has_punctuation = True
-                        break
-                # 如果这段文本中没有标点符号，就用换行符作为分割点
-                if not has_punctuation:
+                has_primary = any(ending in text[:i] for ending in primary_endings)
+                if not has_primary and i > 0:
                     return [text[:i+1], text[i+1:]]
         
-        # 如果没有找到完整句子，返回空列表
+        # 如果没有找到主要分隔符，且文本长度超过50，尝试使用次要分隔符
+        if len(text) > 50:
+            # 在50个字符范围内查找最后一个次要分隔符
+            last_idx = -1
+            search_range = min(len(text), 100)  # 将搜索范围扩大到100个字符
+            
+            for i in range(search_range):
+                if text[i] in secondary_endings:
+                    last_idx = i
+            
+            if last_idx > 0:
+                # 找到次要分隔符，在此处分割
+                return [text[:last_idx+1], text[last_idx+1:]]
+            
+            # 如果连次要分隔符都没找到，再尝试查找空格
+            last_space = text[:search_range].rfind(' ')
+            if last_space > 0:
+                return [text[:last_space+1], text[last_space+1:]]
+        
+        # 如果文本较短或没有找到任何分隔符，返回空列表表示继续等待
         return [] 
