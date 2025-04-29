@@ -49,6 +49,7 @@ class TTSTaskManager:
         """
         if len(re.sub(r'[\s.,!?，。！？\'"』」）】\s]+', "", tts_text)) == 0:
             logger.debug("Empty TTS text, sending silent display payload")
+            logger.info(f"🏃 Message ID: {display_text.message_id}")
             # Get current sequence number for silent payload
             current_sequence = self._sequence_counter
             self._sequence_counter += 1
@@ -120,6 +121,7 @@ class TTSTaskManager:
         sequence_number: int,
     ) -> None:
         """Queue a silent audio payload"""
+        logger.info(f"🏃 Message ID: {display_text.message_id}")
         audio_payload = prepare_audio_payload(
             audio_path=None,
             display_text=display_text,

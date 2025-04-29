@@ -322,12 +322,16 @@ class BasicMemoryAgent(AgentInterface):
             complete_response = ""
 
             async for token in token_stream:
-                # 检查是否是会话ID更新的特殊标记
+                # 检查是否是会话ID或消息ID的特殊标记
                 if token.startswith("__conversation_id:"):
                     new_conversation_id = token.split(":", 1)[1]
                     # logger.info(f"收到新的 conversation_id: {new_conversation_id}")
                     # 更新会话ID并保存到元数据
                     self.set_conversation_info(conversation_id=new_conversation_id)
+                    continue
+                elif token.startswith("__message_id:"):
+                    # 直接传递 message_id 标记，让装饰器链处理
+                    yield token
                     continue
                 
                 yield token
@@ -369,3 +373,17 @@ class BasicMemoryAgent(AgentInterface):
         self._memory.append({"role": "user", "content": group_context})
 
         logger.debug(f"Added group conversation context: '''{group_context}'''")
+
+    async def send_feedback(
+        self,
+        message_id: str,
+        rating: str,
+        content: str = ""
+    ) -> bool:
+        """发送消息反馈"""
+        return await self._llm.send_feedback(
+            message_id=message_id,
+            rating=rating,
+            user=self._user_id,
+            content=content
+        )

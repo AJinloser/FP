@@ -1,4 +1,4 @@
-from typing import Union, List, Dict, Any, Optional
+from typing import Union, List, Dict, Any, Optional, Tuple
 import asyncio
 import json
 from loguru import logger
@@ -84,7 +84,7 @@ async def process_single_conversation(
                 logger.info(f"With {len(images)} images")
 
             # Process agent response
-            full_response = await process_agent_response(
+            full_response, message_id = await process_agent_response(
                 context=context,
                 batch_input=batch_input,
                 websocket_send=websocket_send,
@@ -111,8 +111,11 @@ async def process_single_conversation(
                     content=full_response,
                     name=context.character_config.character_name,
                     avatar=context.character_config.avatar,
+                    message_id=message_id
                 )
-                logger.info(f"AI response: {full_response}")
+                logger.info(f"AI response stored with message_id: {message_id}")
+            
+            logger.info(f"AI response: {full_response}")
 
             return full_response
 
@@ -134,7 +137,7 @@ async def process_agent_response(
     batch_input: Any,
     websocket_send: WebSocketSend,
     tts_manager: TTSTaskManager,
-) -> str:
+) -> Tuple[str, Optional[str]]:
     """Process agent response and generate output
 
     Args:
@@ -144,13 +147,14 @@ async def process_agent_response(
         tts_manager: TTSTaskManager for the conversation
 
     Returns:
-        str: The complete response text
+        Tuple[str, Optional[str]]: The complete response text and the message ID
     """
     full_response = ""
+    message_id = None
     try:
         agent_output = context.agent_engine.chat(batch_input)
         async for output in agent_output:
-            response_part = await process_agent_output(
+            response_part, current_message_id = await process_agent_output(
                 output=output,
                 character_config=context.character_config,
                 live2d_model=context.live2d_model,
@@ -160,9 +164,11 @@ async def process_agent_response(
                 translate_engine=context.translate_engine,
             )
             full_response += response_part
+            if current_message_id:
+                message_id = current_message_id
 
     except Exception as e:
         logger.error(f"Error processing agent response: {e}")
         raise
 
-    return full_response
+    return full_response, message_id

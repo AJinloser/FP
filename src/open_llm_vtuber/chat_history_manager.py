@@ -103,6 +103,7 @@ def store_message(
     content: str,
     name: str | None = None,
     avatar: str | None = None,
+    message_id: str | None = None,
 ):
     """Store a message in a specific history file
 
@@ -113,6 +114,7 @@ def store_message(
         content: Message content
         name: Optional display name (default None)
         avatar: Optional avatar URL (default None)
+        message_id: Optional message ID (default None)
     """
     if not user_id or not history_uid:
         if not user_id:
@@ -139,6 +141,9 @@ def store_message(
         "timestamp": now_str,
         "content": content,
     }
+
+    if message_id:
+        new_item["message_id"] = message_id
 
     # Add optional display information if provided
     if name is not None:

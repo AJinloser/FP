@@ -3,7 +3,7 @@ from pydub import AudioSegment
 from pydub.utils import make_chunks
 from ..agent.output_types import Actions
 from ..agent.output_types import DisplayText
-
+from loguru import logger
 
 def _get_volume_by_chunks(audio: AudioSegment, chunk_length_ms: int) -> list:
     """
@@ -44,6 +44,7 @@ def prepare_audio_payload(
     Returns:
         dict: The audio payload to be sent
     """
+    logger.info(f"🏃 Message ID: {display_text.message_id}")
     if isinstance(display_text, DisplayText):
         display_text = display_text.to_dict()
 
@@ -69,6 +70,7 @@ def prepare_audio_payload(
     audio_base64 = base64.b64encode(audio_bytes).decode("utf-8")
     volumes = _get_volume_by_chunks(audio, chunk_length_ms)
 
+    # logger.info(f"🏃 Message ID: {display_text.message_id}")
     payload = {
         "type": "audio",
         "audio": audio_base64,

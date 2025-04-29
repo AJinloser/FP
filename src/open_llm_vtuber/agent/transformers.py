@@ -77,10 +77,21 @@ def display_processor():
             *args, **kwargs
         ) -> AsyncIterator[Tuple[SentenceWithTags, DisplayText, Actions]]:
             stream = func(*args, **kwargs)
+            current_message_id = None
 
+            # 获取 token 流中的 message_id
             async for sentence, actions in stream:
-                # 直接使用原始文本，不做任何修改
-                display = DisplayText(text=sentence.text)
+                # 检查是否是 message_id 标记
+                if isinstance(sentence.text, str) and sentence.text.startswith("__message_id:"):
+                    current_message_id = sentence.text.split(":", 1)[1]
+                    continue
+                
+                # 创建 DisplayText 时包含 message_id
+                display = DisplayText(
+                    text=sentence.text,
+                    message_id=current_message_id
+                )
+                logger.info(f"display_processor: {display.message_id}")
                 yield sentence, display, actions
 
         return wrapper

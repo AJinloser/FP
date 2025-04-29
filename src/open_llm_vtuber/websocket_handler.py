@@ -44,6 +44,7 @@ class MessageType(Enum):
     CONFIG = ["fetch-configs", "switch-config", "fetch-model-list"]
     CONTROL = ["interrupt-signal", "audio-play-start"]
     DATA = ["mic-audio-data"]
+    FEEDBACK = ["feedback"]  # 添加反馈消息类型
 
 
 class WSMessage(TypedDict, total=False):
@@ -99,6 +100,7 @@ class WebSocketHandler:
             "fetch-tts-settings": self._handle_fetch_tts_settings,
             "fetch-tts-models": self._handle_fetch_tts_models,
             "update-tts-settings": self._handle_update_tts_settings,
+            "feedback": self._handle_feedback,
         }
 
     async def handle_new_connection(
@@ -401,15 +403,18 @@ class WebSocketHandler:
         context = self.client_contexts[client_uid]
         # Update history_uid in service context
         context.history_uid = history_uid
+        user_id = self.client_user_ids[client_uid]
         context.agent_engine.set_memory_from_history(
-            conf_uid=context.character_config.conf_uid,
+            # conf_uid=context.character_config.conf_uid,
+            user_id=user_id,
             history_uid=history_uid,
         )
 
         messages = [
             msg
             for msg in get_history(
-                context.character_config.conf_uid,
+                # context.character_config.conf_uid,
+                user_id,
                 history_uid,
             )
             if msg["role"] != "system"
@@ -755,3 +760,38 @@ class WebSocketHandler:
                 "type": "error",
                 "message": f"Failed to update TTS settings: {str(e)}"
             }))
+
+    async def _handle_feedback(
+        self,
+        websocket: WebSocket,
+        client_uid: str,
+        data: WSMessage
+    ) -> None:
+        """处理消息反馈"""
+        try:
+            message_id = data.get("message_id")
+            rating = data.get("rating")
+            content = data.get("content", "")
+            logger.info(f"收到反馈消息: {message_id}, {rating}, {content}")
+            
+            if not message_id or not rating:
+                return
+            
+            context = self.client_contexts.get(client_uid)
+            if not context:
+                return
+            
+            success = await context.agent_engine.send_feedback(
+                message_id=message_id,
+                rating=rating,
+                content=content
+            )
+            
+            if success:
+                logger.info(f"反馈消息发送成功: {message_id}, {rating}, {content}")
+                await websocket.send_text(json.dumps({
+                    "type": "feedback-result",
+                    "success": True
+                }))
+        except Exception as e:
+            logger.error(f"处理反馈消息时出错: {e}")

@@ -137,6 +137,10 @@ class AsyncLLM(StatelessLLMInterface):
                                     break
                                 
                                 elif event_data.get("event") == "message":
+                                    # 处理 message_id
+                                    if event_data.get("message_id"):
+                                        yield f"__message_id:{event_data['message_id']}"
+                                        
                                     answer = event_data.get("answer", "")
                                     if answer:
                                         self.buffer += answer
@@ -286,3 +290,39 @@ class AsyncLLM(StatelessLLMInterface):
         
         # 如果文本较短或没有找到任何分隔符，返回空列表表示继续等待
         return [] 
+
+    async def send_feedback(
+        self,
+        message_id: str,
+        rating: str,
+        user: str,
+        content: str = ""
+    ) -> bool:
+        """发送消息反馈到 Dify API
+        
+        Args:
+            message_id: 消息ID
+            rating: 反馈类型 ('like', 'dislike', 'null')
+            user: 用户标识
+            content: 反馈内容
+        """
+        try:
+            feedback_endpoint = f"{self.base_url}/v1/messages/{message_id}/feedbacks"
+            async with aiohttp.ClientSession() as session:
+                async with session.post(
+                    feedback_endpoint,
+                    headers=self.headers,
+                    json={
+                        "rating": rating,
+                        "user": user,
+                        "content": content
+                    }
+                ) as response:
+                    if response.status != 200:
+                        logger.error(f"发送反馈失败: {response.status}")
+                        return False
+                    logger.info(f"发送反馈成功: {response.status}")
+                    return True
+        except Exception as e:
+            logger.error(f"发送反馈时出错: {e}")
+            return False 

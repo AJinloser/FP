@@ -1,6 +1,6 @@
 import asyncio
 import re
-from typing import Optional, Union, Any, List, Dict
+from typing import Optional, Union, Any, List, Dict, Tuple
 import numpy as np
 import json
 from loguru import logger
@@ -61,15 +61,16 @@ async def process_agent_output(
     websocket_send: WebSocketSend,
     tts_manager: TTSTaskManager,
     translate_engine: Optional[Any] = None,
-) -> str:
+) -> Tuple[str, Optional[str]]:
     """Process agent output with character information and optional translation"""
     output.display_text.name = character_config.character_name
     output.display_text.avatar = character_config.avatar
 
     full_response = ""
+    message_id = None
     try:
         if isinstance(output, SentenceOutput):
-            full_response = await handle_sentence_output(
+            full_response, message_id = await handle_sentence_output(
                 output,
                 live2d_model,
                 tts_engine,
@@ -89,7 +90,7 @@ async def process_agent_output(
             )
         )
 
-    return full_response
+    return full_response, message_id
 
 
 async def handle_sentence_output(
@@ -99,9 +100,10 @@ async def handle_sentence_output(
     websocket_send: WebSocketSend,
     tts_manager: TTSTaskManager,
     translate_engine: Optional[Any] = None,
-) -> str:
+) -> Tuple[str, Optional[str]]:
     """Handle sentence output type with optional translation support"""
     full_response = ""
+    message_id = None
     async for display_text, tts_text, actions in output:
         logger.debug(f"🏃 Processing output: '''{tts_text}'''...")
 
@@ -113,6 +115,8 @@ async def handle_sentence_output(
             logger.debug("🚫 No translation engine available. Skipping translation.")
 
         full_response += display_text.text
+        message_id = display_text.message_id
+        logger.info(f"🏃 Message ID: {display_text.message_id}")
         await tts_manager.speak(
             tts_text=tts_text,
             display_text=display_text,
@@ -121,7 +125,7 @@ async def handle_sentence_output(
             tts_engine=tts_engine,
             websocket_send=websocket_send,
         )
-    return full_response
+    return full_response, message_id
 
 
 async def handle_audio_output(
