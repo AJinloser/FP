@@ -91,7 +91,7 @@ def display_processor():
                     text=sentence.text,
                     message_id=current_message_id
                 )
-                logger.info(f"display_processor: {display.message_id}")
+                # logger.info(f"display_processor: {display.message_id}")
                 yield sentence, display, actions
 
         return wrapper

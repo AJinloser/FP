@@ -387,3 +387,14 @@ class BasicMemoryAgent(AgentInterface):
             user=self._user_id,
             content=content
         )
+
+    async def update_api_key(self, api_key: str) -> None:
+        """更新 LLM 的 API key
+        
+        Args:
+            api_key: 新的 API key
+        """
+        if hasattr(self._llm, 'update_api_key'):
+            await self._llm.update_api_key(api_key)
+        else:
+            logger.warning("LLM 不支持动态更新 API key")

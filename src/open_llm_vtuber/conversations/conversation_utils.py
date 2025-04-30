@@ -116,7 +116,7 @@ async def handle_sentence_output(
 
         full_response += display_text.text
         message_id = display_text.message_id
-        logger.info(f"🏃 Message ID: {display_text.message_id}")
+        # logger.info(f"🏃 Message ID: {display_text.message_id}")
         await tts_manager.speak(
             tts_text=tts_text,
             display_text=display_text,

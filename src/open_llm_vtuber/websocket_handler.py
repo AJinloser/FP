@@ -45,6 +45,7 @@ class MessageType(Enum):
     CONTROL = ["interrupt-signal", "audio-play-start"]
     DATA = ["mic-audio-data"]
     FEEDBACK = ["feedback"]  # 添加反馈消息类型
+    API_CHANGE = ["change_api"]  # 添加新的消息类型
 
 
 class WSMessage(TypedDict, total=False):
@@ -101,6 +102,7 @@ class WebSocketHandler:
             "fetch-tts-models": self._handle_fetch_tts_models,
             "update-tts-settings": self._handle_update_tts_settings,
             "feedback": self._handle_feedback,
+            "change_api": self._handle_api_change,
         }
 
     async def handle_new_connection(
@@ -795,3 +797,44 @@ class WebSocketHandler:
                 }))
         except Exception as e:
             logger.error(f"处理反馈消息时出错: {e}")
+
+    async def _handle_api_change(
+        self,
+        websocket: WebSocket,
+        client_uid: str,
+        data: WSMessage
+    ) -> None:
+        """处理 API 变更请求"""
+        try:
+            logger.info(f"Handling API change request for client {client_uid}")
+            api_key = data.get("api_key")
+            
+            if not api_key:
+                logger.error("No API key provided")
+                return
+            
+            # 获取当前的 service context
+            service_context = self.client_contexts[client_uid]
+            
+            # 更新 Dify LLM 配置
+            service_context.character_config.agent_config.llm_configs.dify_llm.llm_api_key = api_key
+            
+            # 直接更新 agent_engine 的 API key
+            if hasattr(service_context.agent_engine, 'update_api_key'):
+                await service_context.agent_engine.update_api_key(api_key)
+            else:
+                service_context.agent_engine._llm.llm_api_key = api_key
+            
+            logger.info(f"Successfully changed API key for client {client_uid}")
+            
+            await websocket.send_text(json.dumps({
+                "type": "api_change_success",
+                "message": "API key updated successfully"
+            }))
+            
+        except Exception as e:
+            logger.error(f"Error handling API change: {e}")
+            await websocket.send_text(json.dumps({
+                "type": "error",
+                "message": f"Failed to change API: {str(e)}"
+            }))

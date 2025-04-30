@@ -44,7 +44,7 @@ def prepare_audio_payload(
     Returns:
         dict: The audio payload to be sent
     """
-    logger.info(f"🏃 Message ID: {display_text.message_id}")
+    # logger.info(f"🏃 Message ID: {display_text.message_id}")
     if isinstance(display_text, DisplayText):
         display_text = display_text.to_dict()
 

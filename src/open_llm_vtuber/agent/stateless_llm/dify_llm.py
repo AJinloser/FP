@@ -83,6 +83,7 @@ class AsyncLLM(StatelessLLMInterface):
         """
         try:
             logger.info(f"准备发送请求到 Dify - conversation_id: {conversation_id}, user_id: {user_id}")
+            logger.info(f"api_key: {self.headers['Authorization']}")
             
             # 构建最后一条用户消息
             last_message = messages[-1]["content"] if messages else ""
@@ -326,3 +327,12 @@ class AsyncLLM(StatelessLLMInterface):
         except Exception as e:
             logger.error(f"发送反馈时出错: {e}")
             return False 
+
+    async def update_api_key(self, api_key: str) -> None:
+        """更新 API key
+        
+        Args:
+            api_key: 新的 API key
+        """
+        self.headers["Authorization"] = f"Bearer {api_key}"
+        logger.info("Dify API key 已更新") 
