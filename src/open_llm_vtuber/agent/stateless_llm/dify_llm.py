@@ -193,22 +193,22 @@ class AsyncLLM(StatelessLLMInterface):
         if code_start == -1 and table_start == -1:
             return self._split_normal_text(text)
         
-        # 确定第一个特殊标记的位置和类型
-        first_special = min(
-            (pos for pos in [code_start, table_start] if pos != -1), 
-            default=-1
-        )
+        # # 确定第一个特殊标记的位置和类型
+        # first_special = min(
+        #     (pos for pos in [code_start, table_start] if pos != -1), 
+        #     default=-1
+        # )
         
-        # 如果特殊标记前有普通文本，强制输出
-        if first_special > 0:
-            normal_text = text[:first_special]
-            # 在普通文本末尾添加换行符
-            if not normal_text.endswith('\n'):
-                normal_text += '\n'
-            return [normal_text, text[first_special:]]
+        # # 如果特殊标记前有普通文本，强制输出
+        # if first_special > 0:
+        #     normal_text = text[:first_special]
+        #     # 在普通文本末尾添加换行符
+        #     if not normal_text.endswith('\n'):
+        #         normal_text += '\n'
+        #     return [normal_text, text[first_special:]]
         
         # 处理代码块
-        if first_special == code_start:
+        if code_start:
             if text.count('```', code_start) < 2:
                 # 代码块未完成
                 return []
@@ -224,7 +224,7 @@ class AsyncLLM(StatelessLLMInterface):
             return [code_block, remaining]
         
         # 处理表格
-        if first_special == table_start:
+        if table_start:
             lines = text[table_start:].split('\n')
             table_lines = []
             remaining_lines = []
